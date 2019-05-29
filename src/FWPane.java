@@ -9,7 +9,7 @@ public class FWPane extends Application {
     public void start (Stage primaryStage) {
         Pane pane = new Pane();
 
-        Scene scene = new Scene(pane, 750,750);
+        Scene scene = new Scene(pane, 1200,850);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
