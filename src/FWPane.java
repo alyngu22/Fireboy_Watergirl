@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 
 public class FWPane extends Application {
     @Override
-
     public void start(Stage firstStage) {
         BorderPane bp = new BorderPane();
         Pane pane = new Pane();
