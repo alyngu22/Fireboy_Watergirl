@@ -1,5 +1,6 @@
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -11,7 +12,6 @@ public class FWPane extends Application {
     @Override
 
     public void start (Stage firstStage) {
-
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: rgb(0,0,0)");
 
@@ -22,54 +22,27 @@ public class FWPane extends Application {
         fireboy.setX(60);
         fireboy.setY(800);
 
-        //jumpUp
 
-        TranslateTransition jumpUp = new TranslateTransition();
-        jumpUp.setDuration(Duration.millis(750));
-        jumpUp.setNode(fireboy);
-        jumpUp.setByY(-75);
-        jumpUp.setCycleCount(1);
-
-        //jumpDown
-        TranslateTransition jumpDown = new TranslateTransition();
-        jumpDown.setDuration(Duration.millis(750));
-        jumpDown.setNode(fireboy);
-        jumpDown.setByY(75);
-        jumpDown.setCycleCount(1);
-
-        //moveRight
-        TranslateTransition moveRight = new TranslateTransition();
-        moveRight.setDuration(Duration.millis(1750));
-        moveRight.setNode(fireboy);
-        moveRight.setByX(100);
-        moveRight.setCycleCount(1);
-
-
-        //moveLeft
-        TranslateTransition moveLeft = new TranslateTransition();
-        moveLeft.setDuration(Duration.millis(1750));
-        moveLeft.setNode(fireboy);
-        moveLeft.setByX(-100);
-        moveLeft.setCycleCount(1);
-
-        pane.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.UP) {
-                    jumpUp.play();
+        double temp = fireboy.getY();
+        pane.setOnKeyTyped(e -> {
+            if (e.getCode() == KeyCode.UP){
+                    setJumpUp(fireboy);
                 }
 
                 if (e.getCode() == KeyCode.LEFT) {
-                    moveLeft.play();
+                    setMoveLeft(fireboy);
                 }
 
                 if (e.getCode() == KeyCode.RIGHT) {
-                    moveRight.play();
+                    setMoveRight(fireboy);
                 }
 
         });
 
+        double diff = fireboy.getY() - temp;
         pane.setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.UP) {
-                jumpDown.play();
+                setJumpDown(diff, fireboy);
             }
         });
 
@@ -81,4 +54,42 @@ public class FWPane extends Application {
         pane.requestFocus();
 
 }
+
+public void setJumpDown (double temp, Node node) {
+    TranslateTransition jumpDown = new TranslateTransition();
+    jumpDown.setDuration(Duration.millis(750));
+    jumpDown.setNode(node);
+    jumpDown.setByY(temp);
+    jumpDown.setCycleCount(1);
+    jumpDown.play();
+}
+
+public void setJumpUp(Node node) {
+    TranslateTransition jumpUp = new TranslateTransition();
+    jumpUp.setDuration(Duration.millis(750));
+    jumpUp.setNode(node);
+    jumpUp.setByY(75);
+    jumpUp.setCycleCount(1);
+    jumpUp.play();
+}
+
+public void setMoveRight (Node node) {
+    TranslateTransition moveRight = new TranslateTransition();
+    moveRight.setDuration(Duration.millis(1750));
+    moveRight.setNode(node);
+    moveRight.setByX(100);
+    moveRight.setCycleCount(1);
+    moveRight.play();
+}
+
+public void setMoveLeft (Node node) {
+    TranslateTransition moveLeft = new TranslateTransition();
+    moveLeft.setDuration(Duration.millis(1750));
+    moveLeft.setNode(node);
+    moveLeft.setByX(-100);
+    moveLeft.setCycleCount(1);
+    moveLeft.play();
+
+}
+
 }
