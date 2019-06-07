@@ -1,16 +1,17 @@
 
-import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
+import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.text.*;
 
 public class FWPane2 extends Application {
     @Override
@@ -21,68 +22,77 @@ public class FWPane2 extends Application {
 
         int groundY = 450;
 
-
-        //Fireboy
         ImageView fireboy = new ImageView("fireboy.png");
         fireboy.setFitWidth(85);
-        fireboy.setFitHeight(85);
+        fireboy.setFitHeight(80);
         fireboy.setX(60);
-        fireboy.setY(groundY);
+        fireboy.setY(410);
 
+        Arc fire = new Arc(300,groundY+40,75,20,180,180);
+        fire.setType(ArcType.CHORD);
+        fire.setFill(Color.BLUE);
 
-        TranslateTransition jumpUp = new TranslateTransition();
-        jumpUp.setDuration(Duration.millis(500));
-        jumpUp.setNode(fireboy);
-        jumpUp.setByY(-150);
-        jumpUp.setCycleCount(1);
+        KeyValue sKV = new KeyValue(fireboy.yProperty(), fireboy.getY()-125, Interpolator.EASE_IN);
+        KeyFrame sKF = new KeyFrame(Duration.millis(450), sKV);
+        KeyValue eKV = new KeyValue(fireboy.yProperty(), fireboy.getY(), Interpolator.EASE_OUT);
+        KeyFrame eKF = new KeyFrame(Duration.millis(450), eKV);
+        Timeline jump = new Timeline(sKF);
+        Timeline jump2 = new Timeline(eKF);
+        SequentialTransition ns =  new SequentialTransition(jump, jump2);
 
-        TranslateTransition jumpDown = new TranslateTransition();
-        jumpDown.setDuration(Duration.millis(500));
-        jumpDown.setNode(fireboy);
-        jumpDown.setByY(150);
-        jumpDown.setCycleCount(1);
+        Timeline moveR = new Timeline();
+        moveR.setCycleCount(1);
+        KeyValue kv = new KeyValue(fireboy.xProperty(), fireboy.getX()+1000);
+        KeyFrame kf = new KeyFrame(Duration.millis(3000), kv);
+        moveR.getKeyFrames().add(kf);
 
-        SequentialTransition jump = new SequentialTransition(jumpUp,jumpDown);
-
-        TranslateTransition moveRight = new TranslateTransition();
-        moveRight.setDuration(Duration.millis(550));
-        moveRight.setNode(fireboy);
-        moveRight.setByX(150);
-        moveRight.setCycleCount(1);
-
-        TranslateTransition moveLeft = new TranslateTransition();
-        moveLeft.setDuration(Duration.millis(550));
-        moveLeft.setNode(fireboy);
-        moveLeft.setByX(-150);
-        moveLeft.setCycleCount(1);
-
+        Timeline moveL = new Timeline();
+        moveL.setCycleCount(1);
+        KeyValue kv1 = new KeyValue(fireboy.xProperty(), fireboy.getX()-1000);
+        KeyFrame kf1 = new KeyFrame(Duration.millis(3000), kv1);
+        moveL.getKeyFrames().add(kf1);
 
         pane.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.UP) {
-                jump.play();
+                ns.play();
             }
             if (e.getCode() == KeyCode.LEFT) {
-                moveLeft.play();
+                moveL.play();
             }
-
-            if (e.getCode() == KeyCode.RIGHT) {
-                moveRight.play();
+            if (e.getCode() == KeyCode.RIGHT&&fireboy.getX()<pane.getWidth()-85) {
+                moveR.play();
             }
         });
 
         pane.setOnKeyReleased( ev -> {
             if (ev.getCode() == KeyCode.LEFT) {
-                moveLeft.pause();
+                moveL.stop();
             }
             if (ev.getCode() == KeyCode.RIGHT) {
-                moveRight.pause();
+                moveR.stop();
             }
         });
 
+        new AnimationTimer() {
+            public void handle (long now) {
+                if (fire.contains(fireboy.getX()+10, fireboy.getY() + 81)) {
+                    Rectangle rectangle = new Rectangle(800, 550);
+                    rectangle.setFill(Color.BLACK);
+                    Text text = new Text(250, 275, "Game Over! You Lose!");
+                    text.setFont(Font.font("Papyrus", 36));
+                    text.setFill(Color.WHITE);
+                    pane.getChildren().add(rectangle);
+                    pane.getChildren().add(text);
+                }
+            }
+        }.start();
 
-        pane.getChildren().addAll(fireboy, new firePane(150, 490));
-
-        Scene scene = new Scene(pane, 500,550);
+        pane.getChildren().addAll(new FWPane2.stairPane(450, 400, 50, 150),
+                fireboy, new FWPane2.hedgePane(0,groundY),new FWPane2.hedgePane(150,groundY),new FWPane2.hedgePane(300,groundY),
+                new FWPane2.hedgePane(450,groundY),
+                fire
+        );
+        Scene scene = new Scene(pane, 800,550);
         firstStage.setScene(scene);
         firstStage.show();
         pane.requestFocus();
@@ -92,22 +102,20 @@ public class FWPane2 extends Application {
     class hedgePane extends Pane{
         public hedgePane (int x,int y) {
             ImageView hedge = new ImageView("hedgeImage.jpg");
-            hedge.setFitHeight(125);
+            hedge.setFitHeight(105);
             hedge.setFitWidth(150);
             hedge.setY(y);
             hedge.setX(x);
             getChildren().add(hedge);
-
         }
 
     }
-
-    class firePane extends Pane {
-        public firePane (int x, int y) {
-            Arc fire = new Arc(x,y,75,25,180,180);
-            fire.setType(ArcType.ROUND);
-            fire.setFill(Color.RED);
-            getChildren().add(fire);
+    class stairPane extends Pane{
+        public stairPane(int x, int y, int width, int height){
+            Rectangle rectangle = new Rectangle(x, y, width, height);
+            rectangle.setFill(Color.BLUE);
+            rectangle.setStroke(Color.BLUE);
+            getChildren().add(rectangle);
         }
     }
 }
