@@ -1,8 +1,6 @@
 
 import javafx.animation.*;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -22,24 +20,34 @@ public class FWPane2 extends Application {
 
         int groundY = 450;
 
+        //FIREBOY
         ImageView fireboy = new ImageView("fireboy.png");
         fireboy.setFitWidth(85);
         fireboy.setFitHeight(80);
         fireboy.setX(60);
         fireboy.setY(410);
 
+        //Puddle
         Arc fire = new Arc(300,groundY+40,75,20,180,180);
         fire.setType(ArcType.CHORD);
         fire.setFill(Color.BLUE);
 
-        KeyValue sKV = new KeyValue(fireboy.yProperty(), fireboy.getY()-125, Interpolator.EASE_IN);
+        //Stairs
+        Rectangle stair = new Rectangle(600, 430, 100, 500);
+        stair.setFill(Color.BLUE);
+        stair.setStroke(Color.BLUE);
+        Rectangle topStair = new Rectangle(600, 345, 100, 85);
+
+        //jump movement
+        KeyValue sKV = new KeyValue(fireboy.yProperty(), fireboy.getY()-125, Interpolator.EASE_BOTH);
         KeyFrame sKF = new KeyFrame(Duration.millis(450), sKV);
-        KeyValue eKV = new KeyValue(fireboy.yProperty(), fireboy.getY(), Interpolator.EASE_OUT);
+        KeyValue eKV = new KeyValue(fireboy.yProperty(), fireboy.getY(), Interpolator.EASE_BOTH);
         KeyFrame eKF = new KeyFrame(Duration.millis(450), eKV);
         Timeline jump = new Timeline(sKF);
-        Timeline jump2 = new Timeline(eKF);
-        SequentialTransition ns =  new SequentialTransition(jump, jump2);
+        Timeline fall = new Timeline(eKF);
+        SequentialTransition ns =  new SequentialTransition(jump, fall);
 
+        //Right and left
         Timeline moveR = new Timeline();
         moveR.setCycleCount(1);
         KeyValue kv = new KeyValue(fireboy.xProperty(), fireboy.getX()+1000);
@@ -52,6 +60,7 @@ public class FWPane2 extends Application {
         KeyFrame kf1 = new KeyFrame(Duration.millis(3000), kv1);
         moveL.getKeyFrames().add(kf1);
 
+        //Key movement
         pane.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.UP) {
                 ns.play();
@@ -73,6 +82,7 @@ public class FWPane2 extends Application {
             }
         });
 
+        //Death screen
         new AnimationTimer() {
             public void handle (long now) {
                 if (fire.contains(fireboy.getX()+10, fireboy.getY() + 81)) {
@@ -87,11 +97,13 @@ public class FWPane2 extends Application {
             }
         }.start();
 
-        pane.getChildren().addAll(new FWPane2.stairPane(450, 400, 50, 150),
-                fireboy, new FWPane2.hedgePane(0,groundY),new FWPane2.hedgePane(150,groundY),new FWPane2.hedgePane(300,groundY),
-                new FWPane2.hedgePane(450,groundY),
+
+        pane.getChildren().addAll(
+                stair, fireboy, new FWPane2.hedgePane(0,groundY),new FWPane2.hedgePane(150,groundY),new FWPane2.hedgePane(300,groundY),
+                new FWPane2.hedgePane(450,groundY), new FWPane2.hedgePane(600,groundY),new FWPane2.hedgePane(750,groundY),
                 fire
         );
+
         Scene scene = new Scene(pane, 800,550);
         firstStage.setScene(scene);
         firstStage.show();
@@ -109,13 +121,5 @@ public class FWPane2 extends Application {
             getChildren().add(hedge);
         }
 
-    }
-    class stairPane extends Pane{
-        public stairPane(int x, int y, int width, int height){
-            Rectangle rectangle = new Rectangle(x, y, width, height);
-            rectangle.setFill(Color.BLUE);
-            rectangle.setStroke(Color.BLUE);
-            getChildren().add(rectangle);
-        }
     }
 }
