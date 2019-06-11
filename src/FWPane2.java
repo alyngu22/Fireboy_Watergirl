@@ -111,6 +111,9 @@ public class FWPane2 extends Application {
             }
             if (e.getText().equals("w")) {
                 ns1.play();
+                if(watergirl.getY()==430){
+                    ns1.play();
+                }
             }
             if (e.getText().equals("a")) {
                 moveL2.play();
@@ -153,19 +156,25 @@ public class FWPane2 extends Application {
         }.start();
         new AnimationTimer() {
             public void handle (long now) {
-                if(stair.contains(watergirl.getX()+50,watergirl.getY()+83)){
-                    if(watergirl.getY()<580){
-                        watergirl.setX(550);
+                if (watergirl.getX() > 550) {
+                    watergirl.setX(550);
+                }
+                if (watergirl.getX() > 715) {
+                    watergirl.setX(715);
+                }
+                if (watergirl.getX() < 0) {
+                    watergirl.setX(0);
+                }
+                if (stair.contains(watergirl.getX() + 50, watergirl.getY() + 83)) {
+                    if (watergirl.getY() <= 400) {
+                        ns1.stop();
+                    }
+
+                    if (stair.contains(fireboy.getX(), fireboy.getY() + 83)) {
+                        ns.pause();
                     }
                 }
-                if(stair.contains(fireboy.getX(), fireboy.getY()+83)){
-                    ns.pause();
-                    fireboy.setY(fireboy.getY());
-                }
-                if(stair.contains(watergirl.getX(), watergirl.getY()+83)) {
-                    watergirl.setY(watergirl.getY());
-                    ns1.pause();
-                }
+
             }
         }.start();
 
