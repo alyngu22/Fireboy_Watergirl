@@ -1,6 +1,5 @@
 
-import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
@@ -9,6 +8,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -19,40 +21,49 @@ public class FWPane extends Application {
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: rgb(0,0,0)");
 
-        int ground1Y = 795;
-        
- //FIREBOY       
+        int ground1Y = 825;
+
+
+
+ //FIREBOY
         ImageView fireboy = new ImageView("fireboy.png");
         fireboy.setFitWidth(85);
         fireboy.setFitHeight(85);
         fireboy.setX(60);
-        fireboy.setY(ground1Y);
-        
-       TranslateTransition jumpFup = new TranslateTransition();
-        jumpFup.setDuration(Duration.millis(250));
-        jumpFup.setNode(fireboy);
-        jumpFup.setByY(-100);
-        jumpFup.setCycleCount(1);
+        fireboy.setY(750);
 
-        TranslateTransition jumpFDown = new TranslateTransition();
-        jumpFDown.setDuration(Duration.millis(250));
-        jumpFDown.setNode(fireboy);
-        jumpFDown.setByY(100);
-        jumpFDown.setCycleCount(1);
 
-        SequentialTransition jumpF = new SequentialTransition(jumpFup,jumpFDown);
+        Arc water = new Arc(850,ground1Y + 3,115,50,180,180);
+        water.setType(ArcType.ROUND);
+        water.setFill(Color.DEEPSKYBLUE);
 
-        TranslateTransition moveFRight = new TranslateTransition();
-        moveFRight.setDuration(Duration.millis(5000));
-        moveFRight.setNode(fireboy);
-        moveFRight.setByX(1500);
-        moveFRight.setCycleCount(1);
+        Arc fire = new Arc (1200, ground1Y + 3, 115, 50, 180, 180);
+        fire.setType(ArcType.ROUND);
+        fire.setFill(Color.RED);
 
-        TranslateTransition moveFLeft = new TranslateTransition();
-        moveFLeft.setDuration(Duration.millis(5000));
-        moveFLeft.setNode(fireboy);
-        moveFLeft.setByX(-1500);
-        moveFLeft.setCycleCount(1);
+
+       //Jump
+        KeyValue fJumpUpValue = new KeyValue(fireboy.yProperty(), fireboy.getY()-150, Interpolator.EASE_IN);
+        KeyFrame fJumpUpFrame = new KeyFrame(Duration.millis(450), fJumpUpValue);
+        KeyValue fJumpDownValue = new KeyValue(fireboy.yProperty(), fireboy.getY(), Interpolator.EASE_OUT);
+        KeyFrame fJumpDownFrame = new KeyFrame(Duration.millis(450), fJumpDownValue);
+        Timeline fJumpUp = new Timeline(fJumpUpFrame);
+        Timeline fJumpDown = new Timeline(fJumpDownFrame);
+        SequentialTransition fJump =  new SequentialTransition(fJumpUp, fJumpDown);
+
+        //Right
+        Timeline fMoveR = new Timeline();
+        fMoveR.setCycleCount(1);
+        KeyValue fMoveRValue = new KeyValue(fireboy.xProperty(), fireboy.getX()+2000);
+        KeyFrame fMoveRFrame = new KeyFrame(Duration.millis(4000), fMoveRValue);
+        fMoveR.getKeyFrames().add(fMoveRFrame);
+       //Left
+
+        Timeline fMoveL = new Timeline();
+        fMoveL.setCycleCount(1);
+        KeyValue fMoveLValue = new KeyValue(fireboy.xProperty(), fireboy.getX()-2000);
+        KeyFrame fMoveLFrame = new KeyFrame(Duration.millis(4000), fMoveLValue);
+        fMoveL.getKeyFrames().add(fMoveLFrame);
 
 
 
@@ -61,99 +72,162 @@ public class FWPane extends Application {
         ImageView watergirl = new ImageView("watergirl.png");
         watergirl.setFitWidth(85);
         watergirl.setFitHeight(85);
-        watergirl.setX(100);
-        watergirl.setY(ground1Y);
+        watergirl.setX(175);
+        watergirl.setY(750);
+
+        KeyValue wJumpUpValue = new KeyValue(watergirl.yProperty(), watergirl.getY()-150, Interpolator.EASE_IN);
+        KeyFrame wJumpUpFrame = new KeyFrame(Duration.millis(450), wJumpUpValue);
+        KeyValue wJumpDownValue = new KeyValue(watergirl.yProperty(), watergirl.getY(), Interpolator.EASE_OUT);
+        KeyFrame wJumpDownFrame = new KeyFrame(Duration.millis(450), wJumpDownValue);
+        Timeline wJumpUp = new Timeline(wJumpUpFrame);
+        Timeline wJumpDown = new Timeline(wJumpDownFrame);
+        SequentialTransition wJump =  new SequentialTransition(wJumpUp, wJumpDown);
+
+        //Right
+        Timeline wMoveR = new Timeline();
+        fMoveR.setCycleCount(1);
+        KeyValue wMoveRValue = new KeyValue(watergirl.xProperty(), watergirl.getX()+2000);
+        KeyFrame wMoveRFrame = new KeyFrame(Duration.millis(4000), wMoveRValue);
+        wMoveR.getKeyFrames().add(wMoveRFrame);
+        //Left
+
+        Timeline wMoveL = new Timeline();
+        fMoveL.setCycleCount(1);
+        KeyValue wMoveLValue = new KeyValue(watergirl.xProperty(), watergirl.getX()-2000);
+        KeyFrame wMoveLFrame = new KeyFrame(Duration.millis(4000), wMoveLValue);
+        wMoveL.getKeyFrames().add(wMoveLFrame);
 
 
-        TranslateTransition jumpWup = new TranslateTransition();
-        jumpWup.setDuration(Duration.millis(250));
-        jumpWup.setNode(watergirl);
-        jumpWup.setByY(-100);
-        jumpWup.setCycleCount(1);
+//GROUND2
+    int ground2 = 550;
+    int ground2a = ground2 + 30;
 
-        TranslateTransition jumpWDown = new TranslateTransition();
-        jumpWDown.setDuration(Duration.millis(250));
-        jumpWDown.setNode(watergirl);
-        jumpWDown.setByY(100);
-        jumpWDown.setCycleCount(1);
+    int ground1b = 705;
 
-        SequentialTransition jumpW = new SequentialTransition(jumpWup,jumpWDown);
-
-        TranslateTransition moveWRight = new TranslateTransition();
-        moveWRight.setDuration(Duration.millis(5000));
-        moveWRight.setNode(watergirl);
-        moveWRight.setByX(1500);
-        moveWRight.setCycleCount(1);
-
-        TranslateTransition moveWLeft = new TranslateTransition();
-        moveWLeft.setDuration(Duration.millis(5000));
-        moveWLeft.setNode(watergirl);
-        moveWLeft.setByX(-1500);
-        moveWLeft.setCycleCount(1);
+    ImageView step1 = new ImageView("hedgeImage.jpg");
+    step1.setFitWidth(150);
+    step1.setFitHeight(185);
+    step1.setX(1350);
+    step1.setY(705);
 
 
 
-//KEYBOARD ACTIONS
+//CONTACT W/ ELEMENTS
+        new AnimationTimer() {
+            public void handle (long now) {
+                if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 60, watergirl.getY() + 85)) {
+                    Rectangle rectangle = new Rectangle(800, 550);
+                    rectangle.setFill(Color.BLACK);
+                    Text text = new Text(250, 275, "Game Over! You Lose!");
+                    text.setFont(Font.font("Papyrus", 36));
+                    text.setFill(Color.WHITE);
+                    pane.getChildren().add(rectangle);
+                    pane.getChildren().add(text);
+                }
+                //LEFT RIGHT BOUNDS
+                if (fireboy.getX() < 0) {
+                    fireboy.setX(0);
+                }
+
+                if (fireboy.getX() > pane.getWidth() - 85) {
+                    fireboy.setX(pane.getWidth() - 85);
+                }
+
+                if (watergirl.getX() < 0) {
+                    watergirl.setX(0);
+                }
+
+                if (watergirl.getX() > pane.getWidth() - 85) {
+                    watergirl.setX(pane.getWidth() - 85);
+                }
+
+
+                //STEP
+                if (fireboy.getX() > 1277) {
+                    if (fireboy.getY() <= 705) {
+                        fJump.stop();
+                        fireboy.setY(ground1b - fireboy.getFitHeight() + 10);
+                    } else {
+                        fireboy.setX(1277);
+                    }
+                }
+                else if (fireboy.getY() == ground1b - fireboy.getFitHeight() + 10) {
+                    fireboy.setY(750);
+                }
+
+                if (watergirl.getX() > 1277) {
+                    if (watergirl.getY() <= 705) {
+                        wJump.stop();
+                        watergirl.setY(ground1b - watergirl.getFitHeight() + 10);
+                    }
+                    else {
+                        watergirl.setX(1277);
+                    }
+                }
+                else if (watergirl.getY() == ground1b - watergirl.getFitHeight() + 10) {
+                    watergirl.setY(750);
+                }
+
+
+
+            }
+            }.start();
+
+        //KEYBOARD ACTIONS
         pane.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.UP) {
-                jumpF.play();
+                fJump.play();
             }
             if (e.getCode() == KeyCode.LEFT) {
-                moveFLeft.play();
+                fMoveL.play();
             }
-
-            if (e.getCode() == KeyCode.RIGHT) {
-                moveFRight.play();
+            if (e.getCode() == KeyCode.RIGHT && fireboy.getX()<pane.getWidth()-85) {
+                fMoveR.play();
             }
 
             if (e.getText().equals("w")) {
-                jumpW.play();
+                wJump.play();
             }
+
             if (e.getText().equals("a")) {
-                moveWLeft.play();
-
+                wMoveL.play();
             }
+
             if (e.getText().equals("d")) {
-                moveWRight.play();
-            }
-
-        });
-
-        
-
-        pane.setOnKeyReleased( e -> {
-            if (e.getCode() == KeyCode.LEFT) {
-                moveFLeft.stop();
-            }
-            else if (e.getCode() == KeyCode.RIGHT) {
-                moveFRight.stop();
-            }
-            else if (e.getText().equals("a")) {
-                moveWLeft.stop();
-            }
-            else if (e.getText().equals("d")) {
-                moveWRight.stop();
+                wMoveR.play();
             }
         });
-        
-//GROUND2
-    int ground2 = 620;
-    int ground2a = ground2 + 30;
-    
 
+        pane.setOnKeyReleased( ev -> {
+            if (ev.getCode() == KeyCode.LEFT) {
+                fMoveL.stop();
+            }
+            if (ev.getCode() == KeyCode.RIGHT) {
+                fMoveR.stop();
+            }
+            if (ev.getText().equals("a")) {
+                wMoveL.stop();
+            }
+            if (ev.getText().equals("d")) {
+                wMoveR.stop();
+            }
+        });
 
-        pane.getChildren().addAll(fireboy,watergirl, new hedgePane(0,825),new hedgePane(150,825),new hedgePane(300,825),
-                new hedgePane(450,825),new hedgePane(600,825), new hedgePane(750,825),
-                new hedgePane(900,825),new hedgePane(1050,825), new hedgePane(1200,825), new hedgePane(1350,825),
-                new hedgePane(1500,825),
+        pane.getChildren().addAll(
+
+                step1,
+
+                new hedgePane(0,ground1Y),new hedgePane(150,ground1Y),new hedgePane(300,ground1Y),
+                new hedgePane(450,ground1Y),new hedgePane(600,ground1Y), new hedgePane(750,ground1Y),
+                new hedgePane(900,ground1Y),new hedgePane(1050,ground1Y), new hedgePane(1200,ground1Y), new hedgePane(1350,ground1Y),
 
                 new hedgePane(0,ground2a),new hedgePane(150,ground2a),new hedgePane(300,ground2a),
                 new hedgePane(450,ground2a),new hedgePane(600,ground2a), new hedgePane(750,ground2a),
-                new hedgePane(900,ground2a),new hedgePane(1050,ground2a),
-               
+                new hedgePane(900,ground2a), new hedgePane(1050,ground2a),
 
-                new firePane(350,875),
-                new waterPane(750, 875)
+                water, fire,
+
+                fireboy,watergirl
                 );
 
 
@@ -177,21 +251,5 @@ class hedgePane extends Pane{
 
 }
 
-class firePane extends Pane {
-        public firePane (int x, int y) {
-            Arc fire = new Arc(x,y,75,25,180,180);
-            fire.setType(ArcType.ROUND);
-            fire.setFill(Color.RED);
-            getChildren().add(fire);
-        }
-}
 
-class waterPane extends Pane {
-        public waterPane (int x, int y) {
-            Arc water = new Arc(x,y,75,25,180,180);
-            water.setType(ArcType.ROUND);
-            water.setFill(Color.DEEPSKYBLUE);
-            getChildren().add(water);
-        }
-}
 }
