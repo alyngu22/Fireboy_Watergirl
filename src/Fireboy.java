@@ -15,6 +15,7 @@ public class Fireboy extends ImageView {
     private double vSpeed;
     private double xStart;
     private double yStart;
+    private FireboyMain lvl;
     private Timeline animation;
 
     public Fireboy(double xPos, double yPos) {
@@ -54,5 +55,6 @@ public class Fireboy extends ImageView {
             }
         }
     }
+
 
 }
