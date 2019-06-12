@@ -33,17 +33,18 @@ public class FWPane extends Application {
         fireboy.setY(750);
 
 
-        Arc water = new Arc(850,ground1Y + 3,115,50,180,180);
+        Arc water = new Arc(450,ground1Y + 3,115,50,180,180);
         water.setType(ArcType.ROUND);
         water.setFill(Color.DEEPSKYBLUE);
 
-        Arc fire = new Arc (1200, ground1Y + 3, 115, 50, 180, 180);
+        Arc fire = new Arc (750, ground1Y + 3, 115, 50, 180, 180);
         fire.setType(ArcType.ROUND);
         fire.setFill(Color.RED);
 
 
        //Jump
         KeyValue fJumpUpValue = new KeyValue(fireboy.yProperty(), fireboy.getY()-150, Interpolator.EASE_IN);
+
         KeyFrame fJumpUpFrame = new KeyFrame(Duration.millis(450), fJumpUpValue);
         KeyValue fJumpDownValue = new KeyValue(fireboy.yProperty(), fireboy.getY(), Interpolator.EASE_OUT);
         KeyFrame fJumpDownFrame = new KeyFrame(Duration.millis(450), fJumpDownValue);
@@ -57,8 +58,8 @@ public class FWPane extends Application {
         KeyValue fMoveRValue = new KeyValue(fireboy.xProperty(), fireboy.getX()+2000);
         KeyFrame fMoveRFrame = new KeyFrame(Duration.millis(4000), fMoveRValue);
         fMoveR.getKeyFrames().add(fMoveRFrame);
-       //Left
 
+        //Left
         Timeline fMoveL = new Timeline();
         fMoveL.setCycleCount(1);
         KeyValue fMoveLValue = new KeyValue(fireboy.xProperty(), fireboy.getX()-2000);
@@ -75,7 +76,7 @@ public class FWPane extends Application {
         watergirl.setX(175);
         watergirl.setY(750);
 
-        KeyValue wJumpUpValue = new KeyValue(watergirl.yProperty(), watergirl.getY()-150, Interpolator.EASE_IN);
+        KeyValue wJumpUpValue = new KeyValue(watergirl.yProperty(), watergirl.getY() - 150, Interpolator.EASE_IN);
         KeyFrame wJumpUpFrame = new KeyFrame(Duration.millis(450), wJumpUpValue);
         KeyValue wJumpDownValue = new KeyValue(watergirl.yProperty(), watergirl.getY(), Interpolator.EASE_OUT);
         KeyFrame wJumpDownFrame = new KeyFrame(Duration.millis(450), wJumpDownValue);
@@ -86,14 +87,14 @@ public class FWPane extends Application {
         //Right
         Timeline wMoveR = new Timeline();
         fMoveR.setCycleCount(1);
-        KeyValue wMoveRValue = new KeyValue(watergirl.xProperty(), watergirl.getX()+2000);
+        KeyValue wMoveRValue = new KeyValue(watergirl.xProperty(), watergirl.getX()+ 2000);
         KeyFrame wMoveRFrame = new KeyFrame(Duration.millis(4000), wMoveRValue);
         wMoveR.getKeyFrames().add(wMoveRFrame);
-        //Left
 
+        //Left
         Timeline wMoveL = new Timeline();
         fMoveL.setCycleCount(1);
-        KeyValue wMoveLValue = new KeyValue(watergirl.xProperty(), watergirl.getX()-2000);
+        KeyValue wMoveLValue = new KeyValue(watergirl.xProperty(), watergirl.getX()- 2000);
         KeyFrame wMoveLFrame = new KeyFrame(Duration.millis(4000), wMoveLValue);
         wMoveL.getKeyFrames().add(wMoveLFrame);
 
@@ -102,13 +103,15 @@ public class FWPane extends Application {
     int ground2 = 550;
     int ground2a = ground2 + 30;
 
+    int ground3 = 275;
+
     int ground1b = 705;
 
     ImageView step1 = new ImageView("hedgeImage.jpg");
     step1.setFitWidth(150);
     step1.setFitHeight(185);
     step1.setX(1350);
-    step1.setY(705);
+    step1.setY(ground1b);
 
 
 
@@ -147,26 +150,25 @@ public class FWPane extends Application {
                     if (fireboy.getY() <= 705) {
                         fJump.stop();
                         fireboy.setY(ground1b - fireboy.getFitHeight() + 10);
-                    } else {
-                        fireboy.setX(1277);
                     }
-                }
-                else if (fireboy.getY() == ground1b - fireboy.getFitHeight() + 10) {
-                    fireboy.setY(750);
-                }
+                        else {
+                            fireboy.setX(1277);
+                        }
+                    } else if (fireboy.getY() == ground1b - fireboy.getFitHeight() + 10) {
+                        fireboy.setY(750);
+                    }
 
-                if (watergirl.getX() > 1277) {
-                    if (watergirl.getY() <= 705) {
-                        wJump.stop();
-                        watergirl.setY(ground1b - watergirl.getFitHeight() + 10);
+                    if (watergirl.getX() > 1277) {
+                        if (watergirl.getY() <= 705) {
+                            wJump.stop();
+                            watergirl.setY(ground1b - watergirl.getFitHeight() + 10);
+                        }
+                        else {
+                            watergirl.setX(1277);
+                        }
+                    } else if (watergirl.getY() == ground1b - watergirl.getFitHeight() + 10) {
+                        watergirl.setY(750);
                     }
-                    else {
-                        watergirl.setX(1277);
-                    }
-                }
-                else if (watergirl.getY() == ground1b - watergirl.getFitHeight() + 10) {
-                    watergirl.setY(750);
-                }
 
 
 
@@ -177,6 +179,9 @@ public class FWPane extends Application {
         pane.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.UP) {
                 fJump.play();
+                if (fireboy.getY()== 705) {
+                    fJump.play();
+                }
             }
             if (e.getCode() == KeyCode.LEFT) {
                 fMoveL.play();
@@ -225,6 +230,12 @@ public class FWPane extends Application {
                 new hedgePane(450,ground2a),new hedgePane(600,ground2a), new hedgePane(750,ground2a),
                 new hedgePane(900,ground2a), new hedgePane(1050,ground2a),
 
+                new hedgePane(0,ground3),new hedgePane(150,ground3),new hedgePane(300,ground3),
+                new hedgePane(450,ground3),new hedgePane(600,ground3), new hedgePane(750,ground3),
+                new hedgePane(900,ground3), new hedgePane(1050,ground3),new hedgePane(1200,ground3),
+
+
+
                 water, fire,
 
                 fireboy,watergirl
@@ -235,7 +246,6 @@ public class FWPane extends Application {
         firstStage.setScene(scene);
         firstStage.show();
         pane.requestFocus();
-
 }
 
 class hedgePane extends Pane{
