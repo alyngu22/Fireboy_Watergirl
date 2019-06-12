@@ -20,6 +20,8 @@ public class FWPane2 extends Application {
 
         //Set to ground
         int groundY = 480;
+        int ground2 = 200;
+        int ground2a = ground2 + 30;
 
         //Water and Fire ponds
         Arc fire = new Arc(300,groundY+5,75,20,180,180);
@@ -86,6 +88,8 @@ public class FWPane2 extends Application {
         SequentialTransition ns1 =  new SequentialTransition(jump1, fall1);
 
 
+        SequentialTransition ns2 =  new SequentialTransition(jump1, fall1);
+
         //Right and left WGirl
         Timeline moveR1 = new Timeline();
         moveR1.setCycleCount(1);
@@ -112,9 +116,7 @@ public class FWPane2 extends Application {
             }
             if (e.getText().equals("w")) {
                 ns1.play();
-                if(watergirl.getY()==430){
-                    ns1.play();
-                }
+
             }
             if (e.getText().equals("a")) {
                 moveL2.play();
@@ -171,27 +173,22 @@ public class FWPane2 extends Application {
                     watergirl.setX(pane.getWidth() - 85);
                 }
                 //Stair constraints; cannot enter rectangle area.
-                if (watergirl.getX() > 550&&watergirl.getY()>400) {
+                if (watergirl.getX() >= 550 && watergirl.getY()>400) {
                     watergirl.setX(550);
                 }
                 if (fireboy.getX() > 550&&fireboy.getY()>400) {
                     fireboy.setX(550);
                 }
-                //jump onto the stairs
                 if (stair.contains(watergirl.getX() + 50, watergirl.getY() + 83)) {
                     if (watergirl.getY() <= 430) {
-                        watergirl.setY(watergirl.getY());
-                        ns1.pause();
+                        ns1.stop();
                     }
-                }
-                else{
-                    if (watergirl.getY() <= 400) {
-                        ns1.play();
-                    }
+                }else if(watergirl.getY() <= 400){
+                    ns1.play();
                 }
                 if (stair.contains(fireboy.getX()+50, fireboy.getY() + 83)) {
                     if (fireboy.getY() <= 400) {
-                        ns.pause();
+                       ns1.pause();
                     }
                 }
                 else{
@@ -206,6 +203,9 @@ public class FWPane2 extends Application {
         pane.getChildren().addAll(
                 stair, fireboy, watergirl, new FWPane2.hedgePane(0,groundY),new FWPane2.hedgePane(150,groundY),new FWPane2.hedgePane(300,groundY),
                 new FWPane2.hedgePane(450,groundY), new FWPane2.hedgePane(600,groundY),new FWPane2.hedgePane(750,groundY),
+
+                new FWPane2.hedgePane(0,ground2a),new FWPane2.hedgePane(150,ground2a),new FWPane2.hedgePane(300,ground2a),
+                new FWPane2.hedgePane(450,ground2a),
                 fire, water
         );
 
