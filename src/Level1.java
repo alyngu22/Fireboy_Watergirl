@@ -135,13 +135,14 @@ public class Level1 extends Application {
             public void handle (long now) {
                 if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 60, watergirl.getY() + 85) ||
                         water2.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire2.contains(watergirl.getX() + 60, watergirl.getY() + 85)) {
+
                     pane.getChildren().clear();
                     Rectangle rectangle = new Rectangle(pane.getWidth(), pane.getHeight());
                     rectangle.setFill(Color.BLACK);
                     Text text = new Text(250, pane.getHeight()/2, "Game Over! You Lose!");
                     text.setFont(Font.font("Papyrus", 100));
                     text.setFill(Color.WHITE);
-                    pane.getChildren().add(rectangle);
+
                     pane.getChildren().add(text);
 
                 }
@@ -169,7 +170,8 @@ public class Level1 extends Application {
                 if (fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2))) {
                     fGate.setStroke(Color.WHITE);
                 }
-                if (wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2))&&(fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2)))) {
+
+                else if (wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2))&&(fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2)))) {
                     pane.getChildren().clear();
                     Rectangle win = new Rectangle(0,0,pane.getWidth(),pane.getHeight());
                     Text winT = new Text(250,pane.getHeight()/2,"GAME OVER. YOU WIN!");
