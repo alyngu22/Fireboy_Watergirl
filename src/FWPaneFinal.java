@@ -212,9 +212,22 @@ public class FWPaneFinal extends Application {
 
                 if ((fireboy.getX() >= pane.getWidth() - 85||watergirl.getX()>=pane.getWidth() - 85)) {
                     Rectangle rectangle = new Rectangle(pane.getWidth(), pane.getHeight());
-                    rectangle.setFill(Color.BLACK);
-                    Text text = new Text(450, 325, "Congrats! You Win!\nFireboy: "+ (fGem+fGem1) +"Points\nWatergirl: "+(wGem+wGem1)+ " Points");
-                    text.setFont(Font.font("Times New Roman", 36));
+                    rectangle.setFill(Color.GOLDENROD);
+                    DropShadow ds = new DropShadow();
+                    ds.setOffsetY(3.0f);
+                    ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+                    Text text = new Text(355, 475, "Congratulations! You Win!\nFireboy: " + (fGem + fGem1) + " Points\nWatergirl: " + (wGem + wGem1) + " Points");
+                    if(fGem1+fGem==1&&wGem1+wGem==1){
+                        text.setText("Congratulations! You Wine!\nFireboy: "+ (fGem+fGem1) +" Point\nWatergirl: "+(wGem+wGem1)+ " Point");
+                    }
+                    else if(fGem1+fGem==1){
+                        text.setText("Congratulations! You Win!\nFireboy: "+ (fGem+fGem1) +" Point\nWatergirl: "+(wGem+wGem1)+ " Points");
+                    }
+                    else if(wGem1+wGem==1){
+                        text.setText("Congratulations! You Win!\nFireboy: "+ (fGem+fGem1) +" Points\nWatergirl: "+(wGem+wGem1)+ " Point");
+                    }
+                    text.setFont(Font.font("Verdana", FontWeight.BOLD, 45));
+                    text.setEffect(ds);
                     text.setFill(Color.WHITE);
                     pane.getChildren().add(rectangle);
                     pane.getChildren().add(text);

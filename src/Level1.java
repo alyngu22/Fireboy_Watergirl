@@ -25,7 +25,9 @@ public class Level1 extends Application {
         int ground1 = 825;
 
         int ground1a = ground1 - 120;
-
+        ImageView dungeon = new ImageView("dungeony.png");
+        dungeon.setFitWidth(1500);
+        dungeon.setFitHeight(850);
         Rectangle wGate = new Rectangle(1400,725,90,115);
         wGate.setFill(Color.DEEPSKYBLUE);
 
@@ -265,7 +267,7 @@ public class Level1 extends Application {
         pane.getChildren().addAll(
 
            //     step1,
-
+                dungeon,
                 wGate,fGate,
 
                 new hedgePane(0,ground1),new hedgePane(150,ground1),new hedgePane(300,ground1),
