@@ -33,15 +33,6 @@ public class Level1 extends Application {
         fGate.setFill(Color.RED);
 
 
-
- //FIREBOY
-        ImageView fireboy = new ImageView("fireboy.png");
-        fireboy.setFitWidth(85);
-        fireboy.setFitHeight(85);
-        fireboy.setX(20);
-        fireboy.setY(750);
-
-
         Arc water = new Arc(300,ground1 + 3,115,50,180,180);
         water.setType(ArcType.ROUND);
         water.setFill(Color.DEEPSKYBLUE);
@@ -55,9 +46,18 @@ public class Level1 extends Application {
         fire.setFill(Color.RED);
 
 
-        Arc fire2 = new Arc (1250, ground1 + 3, 115, 50, 180, 180);
+        Arc fire2 = new Arc (1250, ground1 + 3, 60, 50, 180, 180);
         fire2.setType(ArcType.ROUND);
         fire2.setFill(Color.RED);
+
+
+
+ //FIREBOY
+        ImageView fireboy = new ImageView("fireboy.png");
+        fireboy.setFitWidth(85);
+        fireboy.setFitHeight(85);
+        fireboy.setX(20);
+        fireboy.setY(750);
 
 
 
@@ -171,7 +171,7 @@ public class Level1 extends Application {
                     fGate.setStroke(Color.WHITE);
                 }
 
-                else if (wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2))&&(fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2)))) {
+                if (wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2))&&(fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2)))) {
                     pane.getChildren().clear();
                     Rectangle win = new Rectangle(0,0,pane.getWidth(),pane.getHeight());
                     Text winT = new Text(250,pane.getHeight()/2,"GAME OVER. YOU WIN!");
