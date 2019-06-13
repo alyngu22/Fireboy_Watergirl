@@ -20,12 +20,12 @@ public class FWPaneFinal extends Application {
         pane.setStyle("-fx-background-color: rgb(0,0,0)");
 
         int groundY = 825;
-        ImageView forest = new ImageView("foresty.jpg");
+        ImageView forest = new ImageView("Images/foresty.jpg");
         forest.setFitWidth(1200);
         forest.setFitHeight(850);
         forest.setX(0);
         forest.setY(0);
-        ImageView fireboy = new ImageView("fireboy.png");
+        ImageView fireboy = new ImageView("Images/fireboy.png");
         fireboy.setFitWidth(85);
         fireboy.setFitHeight(80);
         fireboy.setX(60);
@@ -43,25 +43,25 @@ public class FWPaneFinal extends Application {
         stair.setStroke(Color.DARKGREEN);
         stair.setFill(Color.DARKGREEN);
 
-        ImageView bGem = new ImageView("blue.png");
+        ImageView bGem = new ImageView("Images/blue.png");
         bGem.setFitWidth(30);
         bGem.setFitHeight(30);
         bGem.setX(570);
         bGem.setY(stair.getY()-30);
 
-        ImageView bGem1 = new ImageView("blue.png");
+        ImageView bGem1 = new ImageView("Images/blue.png");
         bGem1.setFitWidth(30);
         bGem1.setFitHeight(30);
         bGem1.setX(30);
         bGem1.setY(groundY-30);
 
-        ImageView rGem = new ImageView("reddish.png");
+        ImageView rGem = new ImageView("Images/reddish.png");
         rGem.setFitHeight(35);
         rGem.setFitWidth(30);
         rGem.setX(340);
         rGem.setY(735);
 
-        ImageView rGem1 = new ImageView("reddish.png");
+        ImageView rGem1 = new ImageView("Images/reddish.png");
         rGem1.setFitHeight(35);
         rGem1.setFitWidth(30);
         rGem1.setX(810);
@@ -88,7 +88,7 @@ public class FWPaneFinal extends Application {
         KeyFrame kf1 = new KeyFrame(Duration.millis(4000), kv1);
         moveL.getKeyFrames().add(kf1);
 
-        ImageView watergirl = new ImageView("watergirl.png");
+        ImageView watergirl = new ImageView("Images/watergirl.png");
         watergirl.setFitWidth(85);
         watergirl.setFitHeight(80);
         watergirl.setX(100);
@@ -291,7 +291,7 @@ public class FWPaneFinal extends Application {
     }
     class hedgePane extends Pane{
         public hedgePane (int x,int y) {
-            ImageView hedge = new ImageView("hedgeImage.jpg");
+            ImageView hedge = new ImageView("Images/hedgeImage.jpg");
             hedge.setFitHeight(125);
             hedge.setFitWidth(200);
             hedge.setY(y);

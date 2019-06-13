@@ -38,7 +38,7 @@ public class FWPane2 extends Application {
         stair.setStroke(Color.BLACK);
 
         //Fireboy
-        ImageView fireboy = new ImageView("fireboy.png");
+        ImageView fireboy = new ImageView("Images/fireboy.png");
         fireboy.setFitWidth(85);
         fireboy.setFitHeight(80);
         fireboy.setX(60);
@@ -70,7 +70,7 @@ public class FWPane2 extends Application {
         moveL.getKeyFrames().add(kf1);
 
         //Watergirl
-        ImageView watergirl = new ImageView("watergirl.png");
+        ImageView watergirl = new ImageView("Images/watergirl.png");
         watergirl.setFitWidth(85);
         watergirl.setFitHeight(80);
         watergirl.setX(100);
@@ -218,7 +218,7 @@ public class FWPane2 extends Application {
 
     class hedgePane extends Pane{
         public hedgePane (int x,int y) {
-            ImageView hedge = new ImageView("hedgeImage.jpg");
+            ImageView hedge = new ImageView("Images/hedgeImage.jpg");
             hedge.setFitHeight(95);
             hedge.setFitWidth(150);
             hedge.setY(y);

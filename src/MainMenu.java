@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -17,8 +18,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.*;
 
-import javax.swing.*;
-
 public class MainMenu extends Application {
     private int wGem1;
     private int wGem;
@@ -26,13 +25,10 @@ public class MainMenu extends Application {
     private int fGem1;
     private int fGemCount ;
     private int wGemCount ;
+    private int i;
     public void start(Stage menuStage){
         BorderPane bordp = new BorderPane();
-
-        ImageView menuI = new ImageView("menuimage.jpg");
-        menuI.setFitWidth(bordp.getWidth());
-        menuI.setFitHeight(bordp.getHeight());
-        bordp.getChildren().add(menuI);
+        bordp.setStyle("-fx-background-color: rgb(0,90,100)");
 
         Text title = new Text("FIREBOY AND WATERGIRL");
         title.setFont(Font.font("Verdana", FontWeight.BOLD, 75));
@@ -41,28 +37,35 @@ public class MainMenu extends Application {
         title.setX(230);
         title.setY(200);
 
-        Button levelOne=  new Button("Level One");
-        levelOne.setFont(Font.font("Papyrus", 20));
-        levelOne.setMinHeight(150);
-        levelOne.setMinWidth(150);
-        Button levelTwo=  new Button("Level Two");
-        levelTwo.setMinWidth(150);
-        levelTwo.setMinHeight(150);
-        levelTwo.setFont(Font.font("Papyrus", 20));
-        HBox hBox = new HBox(levelOne,levelTwo);
-        hBox.setAlignment(Pos.CENTER);
+        Image l1 = new Image("Images/waterdrop.png");
+        Image l2 = new Image("Images/fire-cartoon.png");
+        for (i = 0; i < 5; i++) {
+            ImageView lOne = new ImageView(l1);
+            if(i%2==0){
+                lOne.setImage(l2);
+            }
+            else{
+                lOne.setImage(l1);
+            }
+            lOne.setFitHeight(100);
+            lOne.setFitWidth(100);
+            lOne.setX(300 + i * 200);
+            lOne.setY(250);
 
-        bordp.setCenter(hBox);
-        levelOne.setOnAction(e->{
-            menuStage.close();
-            Stage oneStage = new Stage();
-            levelOne(oneStage);
-        });
-        levelTwo.setOnAction(ev->{
-            menuStage.close();
-            Stage twoStage= new Stage();
-            levelTwo(twoStage);
-        });
+            Text levelTxt = new Text("" + (i + 1));
+            levelTxt.setFont(Font.font("comic sans ms", FontWeight.BOLD, 30));
+            levelTxt.setX(lOne.getX() + 40);
+            levelTxt.setY(lOne.getY() + 50);
+            levelTxt.setFill(Color.BLACK);
+            lOne.setOnMousePressed(e -> {
+                if(i%2==0){
+                    menuStage.close();
+                    Stage oneStage = new Stage();
+                    levelOne(oneStage);
+                }
+            });
+            bordp.getChildren().addAll(lOne, levelTxt);
+        }
 
         Scene scene = new Scene(bordp,bordp.getWidth(), bordp.getHeight());
         menuStage.setScene(scene);
@@ -76,12 +79,12 @@ public class MainMenu extends Application {
             pane.setStyle("-fx-background-color: rgb(0,0,0)");
 
             int groundY = 825;
-            ImageView forest = new ImageView("foresty.jpg");
+            ImageView forest = new ImageView("Images/foresty.jpg");
             forest.setFitWidth(1200);
             forest.setFitHeight(850);
             forest.setX(0);
             forest.setY(0);
-            ImageView fireboy = new ImageView("fireboy.png");
+            ImageView fireboy = new ImageView("Images/fireboy.png");
             fireboy.setFitWidth(85);
             fireboy.setFitHeight(80);
             fireboy.setX(60);
@@ -99,25 +102,25 @@ public class MainMenu extends Application {
             stair.setStroke(Color.DARKGREEN);
             stair.setFill(Color.DARKGREEN);
 
-            ImageView bGem = new ImageView("blue.png");
+            ImageView bGem = new ImageView("Images/blue.png");
             bGem.setFitWidth(30);
             bGem.setFitHeight(30);
             bGem.setX(570);
             bGem.setY(stair.getY()-30);
 
-            ImageView bGem1 = new ImageView("blue.png");
+            ImageView bGem1 = new ImageView("Images/blue.png");
             bGem1.setFitWidth(30);
             bGem1.setFitHeight(30);
             bGem1.setX(30);
             bGem1.setY(groundY-30);
 
-            ImageView rGem = new ImageView("reddish.png");
+            ImageView rGem = new ImageView("Images/reddish.png");
             rGem.setFitHeight(35);
             rGem.setFitWidth(30);
             rGem.setX(340);
             rGem.setY(735);
 
-            ImageView rGem1 = new ImageView("reddish.png");
+            ImageView rGem1 = new ImageView("Images/reddish.png");
             rGem1.setFitHeight(35);
             rGem1.setFitWidth(30);
             rGem1.setX(810);
@@ -144,7 +147,7 @@ public class MainMenu extends Application {
             KeyFrame kf1 = new KeyFrame(Duration.millis(4000), kv1);
             moveL.getKeyFrames().add(kf1);
 
-            ImageView watergirl = new ImageView("watergirl.png");
+            ImageView watergirl = new ImageView("Images/watergirl.png");
             watergirl.setFitWidth(85);
             watergirl.setFitHeight(80);
             watergirl.setX(100);
@@ -248,6 +251,10 @@ public class MainMenu extends Application {
                         moveR1.stop();
                         ns.stop();
                         ns1.stop();
+                        fGem = 0;
+                        fGem1 = 0;
+                        wGem1 = 0;
+                        wGem = 0;
                     }
                     if(fireboy.contains(rGem.getX(), rGem.getY())&&fGem<1){
                         pane.getChildren().remove(rGem);
@@ -297,12 +304,16 @@ public class MainMenu extends Application {
                         moveR.stop();
                         ns.stop();
                         moveL.stop();
+                        fGem = 0;
+                        fGem1 = 0;
+                        wGem1 = 0;
+                        wGem = 0;
                     }
-                    if (watergirl.getX() >= stair.getX()-85 && watergirl.getX() <= stair.getX()+10 && watergirl.getY()>stair.getY()-70) {
+                    if (watergirl.getX() >= stair.getX()-85 && watergirl.getX() <= stair.getX()+10 && watergirl.getY()>stair.getY()-60) {
                         moveR1.stop();
                         watergirl.setX(stair.getX()-80);
                     }
-                    if (watergirl.getX() <= stair.getX()+stair.getWidth() && watergirl.getX() >= stair.getX()+stair.getWidth()-20 && watergirl.getY()>stair.getY()-80) {
+                    if (watergirl.getX() <= stair.getX()+stair.getWidth() && watergirl.getX() >= stair.getX()+stair.getWidth()-20 && watergirl.getY()>stair.getY()-60) {
                         moveL2.stop();
                         watergirl.setX(740);
                     }
@@ -326,7 +337,7 @@ public class MainMenu extends Application {
                         moveL.stop();
                         fireboy.setX(stair.getX()+stair.getWidth());
                     }
-                    if (stair.contains(fireboy.getX()+75, fireboy.getY() + 83)||stair.contains(fireboy.getX()+30, fireboy.getY()+83)) {
+                    if (stair.contains(fireboy.getX()+75, fireboy.getY() + 83)||stair.contains(fireboy.getX()+45, fireboy.getY()+83)) {
                         if (fireboy.getY() <= stair.getY()-10) {
                             fireboy.setY(stair.getY()-80);
                             ns.pause();
@@ -358,7 +369,7 @@ public class MainMenu extends Application {
 
             int ground1 = 825;
 
-            ImageView dungeon = new ImageView("dungeony.png");
+            ImageView dungeon = new ImageView("Images/dungeony.png");
             dungeon.setFitWidth(1500);
             dungeon.setFitHeight(850);
             Rectangle wGate = new Rectangle(1400,725,90,115);
@@ -385,13 +396,13 @@ public class MainMenu extends Application {
             fire2.setType(ArcType.ROUND);
             fire2.setFill(Color.RED);
 
-            ImageView fGem = new ImageView("reddish.png");
+            ImageView fGem = new ImageView("Images/reddish.png");
             fGem.setFitHeight(30);
             fGem.setFitWidth(30);
             fGem.setX(1240);
             fGem.setY(ground1 - 40);
 
-            ImageView wGem = new ImageView("blue.png");
+            ImageView wGem = new ImageView("Images/blue.png");
             wGem.setFitHeight(30);
             wGem.setFitWidth(30);
             wGem.setX(460);
@@ -400,7 +411,7 @@ public class MainMenu extends Application {
 
 
             //FIREBOY
-            ImageView fireboy = new ImageView("fireboy.png");
+            ImageView fireboy = new ImageView("Images/fireboy.png");
             fireboy.setFitWidth(85);
             fireboy.setFitHeight(85);
             fireboy.setX(20);
@@ -436,7 +447,7 @@ public class MainMenu extends Application {
 
 
 //WATERGIRL
-            ImageView watergirl = new ImageView("watergirl.png");
+            ImageView watergirl = new ImageView("Images/watergirl.png");
             watergirl.setFitWidth(85);
             watergirl.setFitHeight(85);
             watergirl.setX(80);
@@ -471,8 +482,8 @@ public class MainMenu extends Application {
 //CONTACT W/ ELEMENTS
             new AnimationTimer() {
                 public void handle (long now) {
-                    if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 60, watergirl.getY() + 85) ||
-                            water2.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire2.contains(watergirl.getX() + 60, watergirl.getY() + 85)) {
+                    if (water.contains(fireboy.getX() + 50, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 50, watergirl.getY() + 85) ||
+                            water2.contains(fireboy.getX() + 50, fireboy.getY() + 85) || fire2.contains(watergirl.getX() + 50, watergirl.getY() + 85)) {
 
                         pane.getChildren().clear();
                         Rectangle rectangle = new Rectangle(pane.getWidth(), pane.getHeight());
@@ -538,34 +549,6 @@ public class MainMenu extends Application {
                         pane.getChildren().remove(wGem);
                         wGemCount=1;
                     }
-
-
-
-                    //STEP
-                /*if (fireboy.getX() > 1277) {
-                    if (fireboy.getY() <= 705) {
-                        fJump.stop();
-                        fireboy.setY(ground1a - fireboy.getFitHeight() + 10);
-                    }
-                        else {
-                            fireboy.setX(1277);
-                        }
-                    } else if (fireboy.getY() == ground1a - fireboy.getFitHeight() + 10) {
-                        fireboy.setY(750);
-                    }
-
-                    if (watergirl.getX() > 1277) {
-                        if (watergirl.getY() <= 705) {
-                            wJump.stop();
-                            watergirl.setY(ground1a - watergirl.getFitHeight() + 10);
-                        }
-                        else {
-                            watergirl.setX(1277);
-                        }
-                    } else if (watergirl.getY() == ground1a - watergirl.getFitHeight() + 10) {
-                        watergirl.setY(750);
-                    }
-*/
 
 
                 }
@@ -642,7 +625,7 @@ public class MainMenu extends Application {
         }
         class hedgePane extends Pane{
             public hedgePane (int x,int y) {
-                ImageView hedge = new ImageView("hedgeImage.jpg");
+                ImageView hedge = new ImageView("Images/hedgeImage.jpg");
                 hedge.setFitHeight(125);
                 hedge.setFitWidth(200);
                 hedge.setY(y);

@@ -34,7 +34,7 @@ public class FWPane extends Application {
 
 
  //FIREBOY
-        ImageView fireboy = new ImageView("fireboy.png");
+        ImageView fireboy = new ImageView("Images/fireboy.png");
         fireboy.setFitWidth(85);
         fireboy.setFitHeight(85);
         fireboy.setX(60);
@@ -78,7 +78,7 @@ public class FWPane extends Application {
 
 
 //WATERGIRL
-        ImageView watergirl = new ImageView("watergirl.png");
+        ImageView watergirl = new ImageView("Images/watergirl.png");
         watergirl.setFitWidth(85);
         watergirl.setFitHeight(85);
         watergirl.setX(175);
@@ -110,19 +110,19 @@ public class FWPane extends Application {
 
 
 
-    ImageView step1 = new ImageView("hedgeImage.jpg");
+    ImageView step1 = new ImageView("Images/hedgeImage.jpg");
     step1.setFitWidth(150);
     step1.setFitHeight(185);
     step1.setX(1350);
     step1.setY(ground1a);
 
-    ImageView step2 = new ImageView("hedgeImage.jpg");
+    ImageView step2 = new ImageView("Images/hedgeImage.jpg");
     step2.setFitWidth(150);
     step2.setFitHeight(185);
     step2.setX(0);
     step2.setY(ground2a);
 
-        ImageView step3 = new ImageView("hedgeImage.jpg");
+        ImageView step3 = new ImageView("Images/hedgeImage.jpg");
         step3.setFitWidth(100);
         step3.setFitHeight(90);
         step3.setX(0 + 250);
@@ -266,7 +266,7 @@ public class FWPane extends Application {
 
 class hedgePane extends Pane{
       public hedgePane (int x,int y) {
-        ImageView hedge = new ImageView("hedgeImage.jpg");
+        ImageView hedge = new ImageView("Images/hedgeImage.jpg");
         hedge.setFitHeight(125);
         hedge.setFitWidth(150);
         hedge.setY(y);

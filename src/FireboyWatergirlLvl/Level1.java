@@ -26,7 +26,7 @@ public class Level1 extends Application {
 
         int ground1 = 825;
 
-        ImageView dungeon = new ImageView("dungeony.png");
+        ImageView dungeon = new ImageView("Images/dungeony.png");
         dungeon.setFitWidth(1500);
         dungeon.setFitHeight(850);
         Rectangle wGate = new Rectangle(1400,725,90,115);
@@ -53,13 +53,13 @@ public class Level1 extends Application {
         fire2.setType(ArcType.ROUND);
         fire2.setFill(Color.RED);
 
-        ImageView fGem = new ImageView("reddish.png");
+        ImageView fGem = new ImageView("Images/reddish.png");
         fGem.setFitHeight(30);
         fGem.setFitWidth(30);
         fGem.setX(1240);
         fGem.setY(ground1 - 40);
 
-        ImageView wGem = new ImageView("blue.png");
+        ImageView wGem = new ImageView("Images/blue.png");
         wGem.setFitHeight(30);
         wGem.setFitWidth(30);
         wGem.setX(460);
@@ -70,7 +70,7 @@ public class Level1 extends Application {
 
 
  //FIREBOY
-        ImageView fireboy = new ImageView("fireboy.png");
+        ImageView fireboy = new ImageView("Images/fireboy.png");
         fireboy.setFitWidth(85);
         fireboy.setFitHeight(85);
         fireboy.setX(20);
@@ -106,7 +106,7 @@ public class Level1 extends Application {
 
 
 //WATERGIRL
-        ImageView watergirl = new ImageView("watergirl.png");
+        ImageView watergirl = new ImageView("Images/watergirl.png");
         watergirl.setFitWidth(85);
         watergirl.setFitHeight(85);
         watergirl.setX(80);
@@ -306,7 +306,7 @@ public class Level1 extends Application {
 
 class hedgePane extends Pane{
       public hedgePane (int x,int y) {
-          ImageView hedge = new ImageView("hedgeImage.jpg");
+          ImageView hedge = new ImageView("Images/hedgeImage.jpg");
           hedge.setFitHeight(125);
           hedge.setFitWidth(150);
           hedge.setY(y);
