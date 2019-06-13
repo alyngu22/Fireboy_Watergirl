@@ -1,3 +1,4 @@
+
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -23,7 +24,8 @@ public class MainMenu extends Application {
     private int wGem;
     private int fGem;
     private int fGem1;
-
+    private int fGemCount ;
+    private int wGemCount ;
     public void start(Stage menuStage){
         BorderPane bordp = new BorderPane();
 
@@ -349,7 +351,6 @@ public class MainMenu extends Application {
 
             int ground1 = 825;
 
-            int ground1a = ground1 - 120;
             ImageView dungeon = new ImageView("dungeony.png");
             dungeon.setFitWidth(1500);
             dungeon.setFitHeight(850);
@@ -376,6 +377,18 @@ public class MainMenu extends Application {
             Arc fire2 = new Arc (1250, ground1 + 3, 60, 50, 180, 180);
             fire2.setType(ArcType.ROUND);
             fire2.setFill(Color.RED);
+
+            ImageView fGem = new ImageView("reddish.png");
+            fGem.setFitHeight(30);
+            fGem.setFitWidth(30);
+            fGem.setX(1240);
+            fGem.setY(ground1 - 40);
+
+            ImageView wGem = new ImageView("blue.png");
+            wGem.setFitHeight(30);
+            wGem.setFitWidth(30);
+            wGem.setX(460);
+            wGem.setY(ground1 - 40);
 
 
 
@@ -448,15 +461,6 @@ public class MainMenu extends Application {
 
 
 
-            ImageView step1 = new ImageView("hedgeImage.jpg");
-            step1.setFitWidth(150);
-            step1.setFitHeight(185);
-            step1.setX(1350);
-            step1.setY(ground1a);
-
-
-
-
 //CONTACT W/ ELEMENTS
             new AnimationTimer() {
                 public void handle (long now) {
@@ -473,6 +477,7 @@ public class MainMenu extends Application {
                         pane.getChildren().add(text);
 
                     }
+
 
                     //LEFT RIGHT BOUNDS
                     if (fireboy.getX() < 0) {
@@ -494,25 +499,38 @@ public class MainMenu extends Application {
                         wGate.setStroke(Color.WHITE);
                     }
 
+                    else {
+                        wGate.setStroke(Color.DEEPSKYBLUE);
+                    }
+
                     if (fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2))) {
                         fGate.setStroke(Color.WHITE);
                     }
 
+                    else {
+                        fGate.setStroke(Color.RED);
+                    }
+
                     if (wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2))&&(fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2)))) {
                         pane.getChildren().clear();
-                        Rectangle win = new Rectangle(0,0,pane.getWidth(),pane.getHeight());
-                        Text winT = new Text(250,pane.getHeight()/2,"GAME OVER. YOU WIN!");
+
+                        Text winT = new Text(289,pane.getHeight()/2,"GAME OVER. YOU WIN!\n Fire Gems Collected: " + fGemCount + " out of 1 \n Water Gems Collected: " + wGemCount + " out of 1");
                         winT.setTextAlignment(TextAlignment.CENTER);
                         winT.setFill(Color.WHITE);
                         winT.setStroke(Color.WHITE);
-                        winT.setFont(Font.font("Papyrus",100));
+                        winT.setFont(Font.font("Papyrus",50));
                         pane.getChildren().add( winT);
                     }
 
+                    if (fireboy.contains(fGem.getX(),fGem.getY())) {
+                        pane.getChildren().remove(fGem);
+                        fGemCount=1;
+                    }
 
-
-
-
+                    if (watergirl.contains(wGem.getX(),wGem.getY())) {
+                        pane.getChildren().remove(wGem);
+                        wGemCount=1;
+                    }
 
 
 
@@ -590,10 +608,8 @@ public class MainMenu extends Application {
             });
 
             pane.getChildren().addAll(
-
-                    //     step1,
                     dungeon,
-                    wGate,fGate,
+                    wGate,fGate, fGem, wGem,
 
                     new MainMenu.hedgePane(0,ground1),new MainMenu.hedgePane(150,ground1),new MainMenu.hedgePane(300,ground1),
                     new MainMenu.hedgePane(450,ground1),new MainMenu.hedgePane(600,ground1), new MainMenu.hedgePane(750,ground1),
@@ -608,7 +624,7 @@ public class MainMenu extends Application {
             Scene scene = new Scene(pane, 1500,950);
             twoStage.setScene(scene);
             twoStage.show();
-            twoStage.requestFocus();
+            pane.requestFocus();
         }
         class hedgePane extends Pane{
             public hedgePane (int x,int y) {
