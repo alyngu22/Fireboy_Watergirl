@@ -266,14 +266,14 @@ public class FWPane extends Application {
 
 class hedgePane extends Pane{
       public hedgePane (int x,int y) {
-          ImageView hedge = new ImageView("hedgeImage.jpg");
-          hedge.setFitHeight(125);
-          hedge.setFitWidth(150);
-          hedge.setY(y);
-          hedge.setX(x);
-          getChildren().add(hedge);
+        ImageView hedge = new ImageView("hedgeImage.jpg");
+        hedge.setFitHeight(125);
+        hedge.setFitWidth(150);
+        hedge.setY(y);
+        hedge.setX(x);
+        getChildren().add(hedge);
 
-      }
+    }
 
 }
 
