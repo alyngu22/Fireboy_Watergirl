@@ -26,7 +26,9 @@ public class Level1 extends Application {
 
         int ground1 = 825;
 
-
+        ImageView dungeon = new ImageView("dungeony.png");
+        dungeon.setFitWidth(1500);
+        dungeon.setFitHeight(850);
         Rectangle wGate = new Rectangle(1400,725,90,115);
         wGate.setFill(Color.DEEPSKYBLUE);
 
@@ -51,13 +53,13 @@ public class Level1 extends Application {
         fire2.setType(ArcType.ROUND);
         fire2.setFill(Color.RED);
 
-        ImageView fGem = new ImageView("rGem.png");
+        ImageView fGem = new ImageView("reddish.png");
         fGem.setFitHeight(30);
         fGem.setFitWidth(30);
         fGem.setX(1240);
         fGem.setY(ground1 - 40);
 
-        ImageView wGem = new ImageView("bluegem.png");
+        ImageView wGem = new ImageView("blue.png");
         wGem.setFitHeight(30);
         wGem.setFitWidth(30);
         wGem.setX(460);
@@ -283,7 +285,7 @@ public class Level1 extends Application {
         });
 
         pane.getChildren().addAll(
-
+                dungeon,
                 wGate,fGate, fGem, wGem,
 
                 new hedgePane(0,ground1),new hedgePane(150,ground1),new hedgePane(300,ground1),
