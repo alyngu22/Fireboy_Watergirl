@@ -21,7 +21,6 @@ public class Level1 extends Application {
     private int wGemCount;
     @Override
     public void start (Stage firstStage) {
-
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: rgb(0,0,0)");
 
