@@ -11,10 +11,11 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class FWPane extends Application {
+public class Level1 extends Application {
     @Override
     public void start (Stage firstStage) {
 
@@ -25,11 +26,11 @@ public class FWPane extends Application {
 
         int ground1a = ground1 - 120;
 
-        int ground2 = 580;
+        Rectangle wGate = new Rectangle(1400,725,90,115);
+        wGate.setFill(Color.DEEPSKYBLUE);
 
-        int ground2a = ground2 - 120;
-
-        int ground3 = 275;
+        Rectangle fGate = new Rectangle(850,725,90,115);
+        fGate.setFill(Color.RED);
 
 
 
@@ -37,20 +38,30 @@ public class FWPane extends Application {
         ImageView fireboy = new ImageView("fireboy.png");
         fireboy.setFitWidth(85);
         fireboy.setFitHeight(85);
-        fireboy.setX(60);
+        fireboy.setX(20);
         fireboy.setY(750);
 
 
-        Arc water = new Arc(450,ground1 + 3,115,50,180,180);
+        Arc water = new Arc(300,ground1 + 3,115,50,180,180);
         water.setType(ArcType.ROUND);
         water.setFill(Color.DEEPSKYBLUE);
 
-        Arc fire = new Arc (750, ground1 + 3, 115, 50, 180, 180);
+        Arc water2 = new Arc(650,ground1 + 3,115,50,180,180);
+        water2.setType(ArcType.ROUND);
+        water2.setFill(Color.DEEPSKYBLUE);
+
+        Arc fire = new Arc (900, ground1 + 3, 115, 50, 180, 180);
         fire.setType(ArcType.ROUND);
         fire.setFill(Color.RED);
 
 
-       //Jump
+        Arc fire2 = new Arc (1250, ground1 + 3, 115, 50, 180, 180);
+        fire2.setType(ArcType.ROUND);
+        fire2.setFill(Color.RED);
+
+
+
+        //Jump
         KeyValue fJumpUpValue = new KeyValue(fireboy.yProperty(), fireboy.getY()-150, Interpolator.EASE_IN);
 
         KeyFrame fJumpUpFrame = new KeyFrame(Duration.millis(450), fJumpUpValue);
@@ -81,7 +92,7 @@ public class FWPane extends Application {
         ImageView watergirl = new ImageView("watergirl.png");
         watergirl.setFitWidth(85);
         watergirl.setFitHeight(85);
-        watergirl.setX(175);
+        watergirl.setX(80);
         watergirl.setY(750);
 
         KeyValue wJumpUpValue = new KeyValue(watergirl.yProperty(), watergirl.getY() - 150, Interpolator.EASE_IN);
@@ -116,54 +127,68 @@ public class FWPane extends Application {
     step1.setX(1350);
     step1.setY(ground1a);
 
-    ImageView step2 = new ImageView("hedgeImage.jpg");
-    step2.setFitWidth(150);
-    step2.setFitHeight(185);
-    step2.setX(0);
-    step2.setY(ground2a);
-
-        ImageView step3 = new ImageView("hedgeImage.jpg");
-        step3.setFitWidth(100);
-        step3.setFitHeight(90);
-        step3.setX(0 + 250);
-        step3.setY(ground2a - 75);
-
-
 
 
 
 //CONTACT W/ ELEMENTS
         new AnimationTimer() {
             public void handle (long now) {
-                if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 60, watergirl.getY() + 85)) {
-                    Rectangle rectangle = new Rectangle(800, 550);
+                if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 60, watergirl.getY() + 85) ||
+                        water2.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire2.contains(watergirl.getX() + 60, watergirl.getY() + 85)) {
+                    pane.getChildren().clear();
+                    Rectangle rectangle = new Rectangle(pane.getWidth(), pane.getHeight());
                     rectangle.setFill(Color.BLACK);
-                    Text text = new Text(250, 275, "Game Over! You Lose!");
-                    text.setFont(Font.font("Papyrus", 36));
+                    Text text = new Text(250, pane.getHeight()/2, "Game Over! You Lose!");
+                    text.setFont(Font.font("Papyrus", 100));
                     text.setFill(Color.WHITE);
                     pane.getChildren().add(rectangle);
                     pane.getChildren().add(text);
+
                 }
+
                 //LEFT RIGHT BOUNDS
                 if (fireboy.getX() < 0) {
                     fireboy.setX(0);
                 }
 
-                if (fireboy.getX() > pane.getWidth() - 85) {
-                    fireboy.setX(pane.getWidth() - 85);
+                if (fireboy.getX() > pane.getWidth()-85) {
+                    fireboy.setX(pane.getWidth()-85);
                 }
-
+                if (watergirl.getX() > pane.getWidth()-85) {
+                    watergirl.setX(pane.getWidth()-85);
+                }
                 if (watergirl.getX() < 0) {
                     watergirl.setX(0);
                 }
 
-                if (watergirl.getX() > pane.getWidth() - 85) {
-                    watergirl.setX(pane.getWidth() - 85);
+
+                if ((wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2)))) {
+                    wGate.setStroke(Color.WHITE);
+                }
+
+                if (fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2))) {
+                    fGate.setStroke(Color.WHITE);
+                }
+                if (wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2))&&(fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2)))) {
+                    pane.getChildren().clear();
+                    Rectangle win = new Rectangle(0,0,pane.getWidth(),pane.getHeight());
+                    Text winT = new Text(250,pane.getHeight()/2,"GAME OVER. YOU WIN!");
+                    winT.setTextAlignment(TextAlignment.CENTER);
+                    winT.setFill(Color.WHITE);
+                    winT.setStroke(Color.WHITE);
+                    winT.setFont(Font.font("Papyrus",100));
+                    pane.getChildren().add( winT);
                 }
 
 
+
+
+
+
+
+
                 //STEP
-                if (fireboy.getX() > 1277) {
+                /*if (fireboy.getX() > 1277) {
                     if (fireboy.getY() <= 705) {
                         fJump.stop();
                         fireboy.setY(ground1a - fireboy.getFitHeight() + 10);
@@ -186,7 +211,7 @@ public class FWPane extends Application {
                     } else if (watergirl.getY() == ground1a - watergirl.getFitHeight() + 10) {
                         watergirl.setY(750);
                     }
-
+*/
 
 
             }
@@ -237,22 +262,15 @@ public class FWPane extends Application {
 
         pane.getChildren().addAll(
 
-                step1, step2,step3,
+           //     step1,
+
+                wGate,fGate,
 
                 new hedgePane(0,ground1),new hedgePane(150,ground1),new hedgePane(300,ground1),
                 new hedgePane(450,ground1),new hedgePane(600,ground1), new hedgePane(750,ground1),
                 new hedgePane(900,ground1),new hedgePane(1050,ground1), new hedgePane(1200,ground1), new hedgePane(1350,ground1),
 
-                new hedgePane(0,ground2),new hedgePane(150,ground2),new hedgePane(300,ground2),
-                new hedgePane(450,ground2),new hedgePane(600,ground2), new hedgePane(750,ground2),
-                new hedgePane(900,ground2), new hedgePane(1050,ground2),
-
-
-                new hedgePane(450,ground3),new hedgePane(600,ground3), new hedgePane(750,ground3),
-                new hedgePane(900,ground3), new hedgePane(1050,ground3),new hedgePane(1200,ground3),
-                new hedgePane(1350,ground3),
-
-                water, fire,
+                water, fire, water2,fire2,
 
                 fireboy,watergirl
                 );
