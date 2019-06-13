@@ -1,3 +1,4 @@
+package FireboyWatergirlLvl;
 
 import javafx.animation.*;
 import javafx.application.Application;
@@ -15,7 +16,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Level1 extends Application {
+public class Level3 extends Application {
     @Override
     public void start (Stage firstStage) {
 
@@ -29,10 +30,29 @@ public class Level1 extends Application {
         Rectangle wGate = new Rectangle(1400,725,90,115);
         wGate.setFill(Color.DEEPSKYBLUE);
 
-        Rectangle fGate = new Rectangle(850,725,90,115);
+        Rectangle fGate = new Rectangle(1200,725,90,115);
         fGate.setFill(Color.RED);
 
+        ImageView step1 = new ImageView("hedgeImage.jpg");
+        step1.setFitWidth(150);
+        step1.setFitHeight(185);
+        step1.setX(200);
+        step1.setY(ground1a);
 
+
+        ImageView step2 = new ImageView("hedgeImage.jpg");
+        step2.setFitWidth(150);
+        step2.setFitHeight(185);
+        step2.setX(600);
+        step2.setY(ground1a);
+
+        ImageView step3 = new ImageView("hedgeImage.jpg");
+        step3.setFitWidth(150);
+        step3.setFitHeight(185);
+        step3.setX(1000);
+        step3.setY(ground1a);
+
+/*
         Arc water = new Arc(300,ground1 + 3,115,50,180,180);
         water.setType(ArcType.ROUND);
         water.setFill(Color.DEEPSKYBLUE);
@@ -50,9 +70,9 @@ public class Level1 extends Application {
         fire2.setType(ArcType.ROUND);
         fire2.setFill(Color.RED);
 
+*/
 
-
- //FIREBOY
+        //FIREBOY
         ImageView fireboy = new ImageView("fireboy.png");
         fireboy.setFitWidth(85);
         fireboy.setFitHeight(85);
@@ -121,11 +141,7 @@ public class Level1 extends Application {
 
 
 
-    ImageView step1 = new ImageView("hedgeImage.jpg");
-    step1.setFitWidth(150);
-    step1.setFitHeight(185);
-    step1.setX(1350);
-    step1.setY(ground1a);
+
 
 
 
@@ -133,7 +149,7 @@ public class Level1 extends Application {
 //CONTACT W/ ELEMENTS
         new AnimationTimer() {
             public void handle (long now) {
-                if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 60, watergirl.getY() + 85) ||
+               /* if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 60, watergirl.getY() + 85) ||
                         water2.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire2.contains(watergirl.getX() + 60, watergirl.getY() + 85)) {
 
                     pane.getChildren().clear();
@@ -146,7 +162,7 @@ public class Level1 extends Application {
                     pane.getChildren().add(text);
 
                 }
-
+*/
                 //LEFT RIGHT BOUNDS
                 if (fireboy.getX() < 0) {
                     fireboy.setX(0);
@@ -173,8 +189,7 @@ public class Level1 extends Application {
 
                 if (wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2))&&(fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2)))) {
                     pane.getChildren().clear();
-                    Rectangle win = new Rectangle(0,0,pane.getWidth(),pane.getHeight());
-                    Text winT = new Text(250,pane.getHeight()/2,"GAME OVER. YOU WIN!");
+                    Text winT = new Text(265,pane.getHeight()/2,"GAME OVER. YOU WIN!");
                     winT.setTextAlignment(TextAlignment.CENTER);
                     winT.setFill(Color.WHITE);
                     winT.setStroke(Color.WHITE);
@@ -183,24 +198,21 @@ public class Level1 extends Application {
                 }
 
 
-
-
-
-
-
-
                 //STEP
-                /*if (fireboy.getX() > 1277) {
+                if (fireboy.getX() > 127) {
                     if (fireboy.getY() <= 705) {
                         fJump.stop();
                         fireboy.setY(ground1a - fireboy.getFitHeight() + 10);
                     }
                         else {
-                            fireboy.setX(1277);
+                            fireboy.setX(127);
                         }
-                    } else if (fireboy.getY() == ground1a - fireboy.getFitHeight() + 10) {
+                    }
+                else if (fireboy.getY() == ground1a - fireboy.getFitHeight() + 10) {
                         fireboy.setY(750);
                     }
+
+
 
                     if (watergirl.getX() > 1277) {
                         if (watergirl.getY() <= 705) {
@@ -213,11 +225,11 @@ public class Level1 extends Application {
                     } else if (watergirl.getY() == ground1a - watergirl.getFitHeight() + 10) {
                         watergirl.setY(750);
                     }
-*/
+
 
 
             }
-            }.start();
+        }.start();
 
         //KEYBOARD ACTIONS
         pane.setOnKeyPressed(e -> {
@@ -264,7 +276,7 @@ public class Level1 extends Application {
 
         pane.getChildren().addAll(
 
-           //     step1,
+                step1, step2, step3,
 
                 wGate,fGate,
 
@@ -272,30 +284,30 @@ public class Level1 extends Application {
                 new hedgePane(450,ground1),new hedgePane(600,ground1), new hedgePane(750,ground1),
                 new hedgePane(900,ground1),new hedgePane(1050,ground1), new hedgePane(1200,ground1), new hedgePane(1350,ground1),
 
-                water, fire, water2,fire2,
+               // water, fire, water2,fire2,
 
                 fireboy,watergirl
-                );
+        );
 
 
         Scene scene = new Scene(pane, 1500,950);
         firstStage.setScene(scene);
         firstStage.show();
         pane.requestFocus();
-}
+    }
 
-class hedgePane extends Pane{
-      public hedgePane (int x,int y) {
-          ImageView hedge = new ImageView("hedgeImage.jpg");
-          hedge.setFitHeight(125);
-          hedge.setFitWidth(150);
-          hedge.setY(y);
-          hedge.setX(x);
-          getChildren().add(hedge);
+    class hedgePane extends Pane{
+        public hedgePane (int x,int y) {
+            ImageView hedge = new ImageView("hedgeImage.jpg");
+            hedge.setFitHeight(125);
+            hedge.setFitWidth(150);
+            hedge.setY(y);
+            hedge.setX(x);
+            getChildren().add(hedge);
 
-      }
+        }
 
-}
+    }
 
 
 }
