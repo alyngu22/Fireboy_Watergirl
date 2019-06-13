@@ -210,6 +210,13 @@ public class MainMenu extends Application {
                 if (ev.getText().equals("d")) {
                     moveR1.stop();
                 }
+
+                if (ev.getCode()== KeyCode.ESCAPE) {
+                    oneStage.close();
+                    Stage menuStage = new Stage();
+                    start(menuStage);
+
+                }
             });
             wGem = 0;
             fGem = 0;
@@ -589,6 +596,13 @@ public class MainMenu extends Application {
 
                 if (e.getText().equals("d")) {
                     wMoveR.play();
+                }
+
+                if (e.getCode()== KeyCode.ESCAPE) {
+                    twoStage.close();
+                    Stage menuStage = new Stage();
+                    start(menuStage);
+
                 }
             });
 
