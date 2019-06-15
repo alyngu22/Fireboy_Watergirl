@@ -3,7 +3,6 @@ import javafx.animation.*;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,6 +25,7 @@ public class MainMenu extends Application {
     private int fGemCount ;
     private int wGemCount ;
     private int i;
+    private int a;
     public void start(Stage menuStage){
         BorderPane bordp = new BorderPane();
         bordp.setStyle("-fx-background-color: rgb(0,90,100)");
@@ -43,10 +43,23 @@ public class MainMenu extends Application {
             ImageView lOne = new ImageView(l1);
             if(i%2==0){
                 lOne.setImage(l2);
+                a = 2;
             }
             else{
                 lOne.setImage(l1);
+                a= 1;
             }
+            lOne.setOnMousePressed(e -> {
+                menuStage.close();
+                if(a==1){
+                    Stage twoStage = new Stage();
+                    levelTwo(twoStage);
+                }
+                else if(a==2){
+                    Stage oneStage = new Stage();
+                    levelOne(oneStage);
+                }
+            });
             lOne.setFitHeight(100);
             lOne.setFitWidth(100);
             lOne.setX(300 + i * 200);
@@ -57,13 +70,6 @@ public class MainMenu extends Application {
             levelTxt.setX(lOne.getX() + 40);
             levelTxt.setY(lOne.getY() + 50);
             levelTxt.setFill(Color.BLACK);
-            lOne.setOnMousePressed(e -> {
-                if(i%2==0){
-                    menuStage.close();
-                    Stage oneStage = new Stage();
-                    levelOne(oneStage);
-                }
-            });
             bordp.getChildren().addAll(lOne, levelTxt);
         }
 
@@ -251,10 +257,6 @@ public class MainMenu extends Application {
                         moveR1.stop();
                         ns.stop();
                         ns1.stop();
-                        fGem = 0;
-                        fGem1 = 0;
-                        wGem1 = 0;
-                        wGem = 0;
                     }
                     if(fireboy.contains(rGem.getX(), rGem.getY())&&fGem<1){
                         pane.getChildren().remove(rGem);
@@ -304,10 +306,6 @@ public class MainMenu extends Application {
                         moveR.stop();
                         ns.stop();
                         moveL.stop();
-                        fGem = 0;
-                        fGem1 = 0;
-                        wGem1 = 0;
-                        wGem = 0;
                     }
                     if (watergirl.getX() >= stair.getX()-85 && watergirl.getX() <= stair.getX()+10 && watergirl.getY()>stair.getY()-60) {
                         moveR1.stop();
@@ -348,7 +346,6 @@ public class MainMenu extends Application {
                             ns.play();
                         }
                     }
-
                 }
             }.start();
 
