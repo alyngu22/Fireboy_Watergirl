@@ -13,21 +13,19 @@ import javafx.util.Duration;
 import javafx.scene.text.*;
 import Main.MainMenu;
 public class Level1 extends Application {
-    private int wGem1;
-    private int wGem;
-    private int fGem;
-    private int fGem1;
+    private int wGem1=0;
+    private int wGem=0;
+    private int fGem=0;
+    private int fGem1=0;
     public void start(Stage firstStage){
-        wGem = 0;
-        fGem = 0;
-        wGem1 = 0;
-        fGem1 = 0;
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: rgb(0,0,0)");
 
         int groundY = 825;
+
+        //IMAGES FBOY AND WGIRL
         ImageView forest = new ImageView("Images/foresty.jpg");
-        forest.setFitWidth(1200);
+        forest.setFitWidth(1500);
         forest.setFitHeight(850);
         forest.setX(0);
         forest.setY(0);
@@ -37,6 +35,7 @@ public class Level1 extends Application {
         fireboy.setX(60);
         fireboy.setY(groundY-70);
 
+        //ALL SHAPES
         Arc fire = new Arc(300,groundY+5,75,20,180,180);
         fire.setType(ArcType.CHORD);
         fire.setFill(Color.RED);
@@ -49,6 +48,13 @@ public class Level1 extends Application {
         stair.setStroke(Color.DARKGREEN);
         stair.setFill(Color.DARKGREEN);
 
+        Rectangle wGate = new Rectangle(1400,715,90,115);
+        wGate.setFill(Color.DEEPSKYBLUE);
+
+        Rectangle fGate = new Rectangle(1050,715,90,115);
+        fGate.setFill(Color.RED);
+
+        //GEMS
         ImageView bGem = new ImageView("Images/blue.png");
         bGem.setFitWidth(30);
         bGem.setFitHeight(30);
@@ -72,6 +78,7 @@ public class Level1 extends Application {
         rGem1.setFitWidth(30);
         rGem1.setX(810);
         rGem1.setY(750);
+
         //jump movement Fireboy
         KeyValue sKV = new KeyValue(fireboy.yProperty(), fireboy.getY()-125, Interpolator.EASE_BOTH);
         KeyFrame sKF = new KeyFrame(Duration.millis(450), sKV);
@@ -82,6 +89,7 @@ public class Level1 extends Application {
         Timeline fall = new Timeline(eKF);
         SequentialTransition ns =  new SequentialTransition(jump, fall);
 
+        //RIGHT AND LEFT FBOY
         Timeline moveR = new Timeline();
         moveR.setCycleCount(1);
         KeyValue kv = new KeyValue(fireboy.xProperty(), fireboy.getX()+2000);
@@ -124,6 +132,7 @@ public class Level1 extends Application {
         KeyFrame kf3 = new KeyFrame(Duration.millis(4000), kv3);
         moveL2.getKeyFrames().add(kf3);
 
+        //MOVEMENT
         pane.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.UP) {
                 ns.play();
@@ -168,6 +177,7 @@ public class Level1 extends Application {
                 main.start(menuStage);
             }
         });
+
         new AnimationTimer() {
             public void handle (long now) {
                 if (water.contains(fireboy.getX()+25, fireboy.getY() + 83)||fire.contains(watergirl.getX()+25, watergirl.getY()+83)) {
@@ -220,8 +230,29 @@ public class Level1 extends Application {
                 if (watergirl.getX()<0){
                     watergirl.setX(0);
                 }
+                if (fireboy.getX() > pane.getWidth()-85) {
+                    fireboy.setX(pane.getWidth()-85);
+                }
+                if (watergirl.getX() > pane.getWidth()-85) {
+                    watergirl.setX(pane.getWidth()-85);
+                }
 
-                if ((fireboy.getX() >= pane.getWidth() - 85||watergirl.getX()>=pane.getWidth() - 85)) {
+                if ((wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2)))) {
+                    wGate.setStroke(Color.WHITE);
+                }
+
+                else {
+                    wGate.setStroke(Color.DEEPSKYBLUE);
+                }
+
+                if (fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2))) {
+                    fGate.setStroke(Color.WHITE);
+                }
+
+                else {
+                    fGate.setStroke(Color.RED);
+                }
+                if (wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2))&&(fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2)))) {
                     Rectangle rectangle = new Rectangle(pane.getWidth(), pane.getHeight());
                     rectangle.setFill(Color.GOLDENROD);
                     DropShadow ds = new DropShadow();
@@ -229,7 +260,7 @@ public class Level1 extends Application {
                     ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
                     Text text = new Text(355, 475, "Congratulations! You Win!\nFireboy: " + (fGem + fGem1) + " Points\nWatergirl: " + (wGem + wGem1) + " Points");
                     if(fGem1+fGem==1&&wGem1+wGem==1){
-                        text.setText("Congratulations! You Wine!\nFireboy: "+ (fGem+fGem1) +" Point\nWatergirl: "+(wGem+wGem1)+ " Point");
+                        text.setText("Congratulations! You Win!\nFireboy: "+ (fGem+fGem1) +" Point\nWatergirl: "+(wGem+wGem1)+ " Point");
                     }
                     else if(fGem1+fGem==1){
                         text.setText("Congratulations! You Win!\nFireboy: "+ (fGem+fGem1) +" Point\nWatergirl: "+(wGem+wGem1)+ " Points");
@@ -289,11 +320,12 @@ public class Level1 extends Application {
         }.start();
 
 
-        pane.getChildren().addAll(forest, stair, fireboy, watergirl, new Level1.hedgePane(550,725),new Level1.hedgePane(0,groundY),new Level1.hedgePane(150,groundY),new Level1.hedgePane(300,groundY),
+        pane.getChildren().addAll(forest, stair, wGate, fGate, fireboy, watergirl, new Level1.hedgePane(550,725),new Level1.hedgePane(0,groundY),new Level1.hedgePane(150,groundY),new Level1.hedgePane(300,groundY),
                 new Level1.hedgePane(450,groundY),new Level1.hedgePane(600,groundY), new Level1.hedgePane(750,groundY),
-                new Level1.hedgePane(900,groundY),new Level1.hedgePane(1050,groundY),fire, water, bGem, bGem1,rGem, rGem1);
+                new Level1.hedgePane(900,groundY),new Level1.hedgePane(1050,groundY), new Level1.hedgePane(1250,groundY), new Level1.hedgePane(1450,groundY),
+                fire, water, bGem, bGem1,rGem, rGem1);
 
-        Scene scene = new Scene(pane, 1200,950);
+        Scene scene = new Scene(pane, 1500,950);
         firstStage.setTitle("Level 1");
         firstStage.setScene(scene);
         firstStage.show();

@@ -71,7 +71,6 @@ public class MainMenu extends Application {
             levelTxt.setFill(Color.BLACK);
             bordp.getChildren().addAll(lOne, levelTxt);
         }
-
         Scene scene = new Scene(bordp,bordp.getWidth(), bordp.getHeight());
         menuStage.setScene(scene);
         menuStage.show();
