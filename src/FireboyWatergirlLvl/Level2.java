@@ -15,12 +15,12 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import Main.MainMenu;
 public class Level2 extends Application {
     private int fGemCount;
     private int wGemCount;
     @Override
-    public void start (Stage firstStage) {
+    public void start(Stage twoStage) {
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: rgb(0,0,0)");
 
@@ -65,11 +65,9 @@ public class Level2 extends Application {
         wGem.setX(460);
         wGem.setY(ground1 - 40);
 
-        fGemCount = 0;
-        wGemCount = 0;
 
 
- //FIREBOY
+        //FIREBOY
         ImageView fireboy = new ImageView("Images/fireboy.png");
         fireboy.setFitWidth(85);
         fireboy.setFitHeight(85);
@@ -141,8 +139,8 @@ public class Level2 extends Application {
 //CONTACT W/ ELEMENTS
         new AnimationTimer() {
             public void handle (long now) {
-                if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 60, watergirl.getY() + 85) ||
-                        water2.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire2.contains(watergirl.getX() + 60, watergirl.getY() + 85)) {
+                if (water.contains(fireboy.getX() + 50, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 50, watergirl.getY() + 85) ||
+                        water2.contains(fireboy.getX() + 50, fireboy.getY() + 85) || fire2.contains(watergirl.getX() + 50, watergirl.getY() + 85)) {
 
                     pane.getChildren().clear();
                     Rectangle rectangle = new Rectangle(pane.getWidth(), pane.getHeight());
@@ -210,36 +208,8 @@ public class Level2 extends Application {
                 }
 
 
-
-                //STEP
-                /*if (fireboy.getX() > 1277) {
-                    if (fireboy.getY() <= 705) {
-                        fJump.stop();
-                        fireboy.setY(ground1a - fireboy.getFitHeight() + 10);
-                    }
-                        else {
-                            fireboy.setX(1277);
-                        }
-                    } else if (fireboy.getY() == ground1a - fireboy.getFitHeight() + 10) {
-                        fireboy.setY(750);
-                    }
-
-                    if (watergirl.getX() > 1277) {
-                        if (watergirl.getY() <= 705) {
-                            wJump.stop();
-                            watergirl.setY(ground1a - watergirl.getFitHeight() + 10);
-                        }
-                        else {
-                            watergirl.setX(1277);
-                        }
-                    } else if (watergirl.getY() == ground1a - watergirl.getFitHeight() + 10) {
-                        watergirl.setY(750);
-                    }
-*/
-
-
             }
-            }.start();
+        }.start();
 
         //KEYBOARD ACTIONS
         pane.setOnKeyPressed(e -> {
@@ -266,6 +236,14 @@ public class Level2 extends Application {
 
             if (e.getText().equals("d")) {
                 wMoveR.play();
+            }
+
+            if (e.getCode()== KeyCode.ESCAPE) {
+                twoStage.close();
+                MainMenu as = new MainMenu();
+                Stage menuStage = new Stage();
+                as.start(menuStage);
+
             }
         });
 
@@ -299,8 +277,8 @@ public class Level2 extends Application {
 
 
         Scene scene = new Scene(pane, 1500,950);
-        firstStage.setScene(scene);
-        firstStage.show();
+        twoStage.setScene(scene);
+        twoStage.show();
         pane.requestFocus();
 }
 

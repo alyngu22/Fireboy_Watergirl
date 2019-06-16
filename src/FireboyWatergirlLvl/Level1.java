@@ -1,5 +1,4 @@
 package FireboyWatergirlLvl;
-
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -12,12 +11,17 @@ import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.*;
+import Main.MainMenu;
 public class Level1 extends Application {
     private int wGem1;
     private int wGem;
     private int fGem;
     private int fGem1;
-    public void start(Stage firstStage) {
+    public void start(Stage firstStage){
+        wGem = 0;
+        fGem = 0;
+        wGem1 = 0;
+        fGem1 = 0;
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: rgb(0,0,0)");
 
@@ -156,9 +160,14 @@ public class Level1 extends Application {
             if (ev.getText().equals("d")) {
                 moveR1.stop();
             }
+
+            if (ev.getCode()== KeyCode.ESCAPE) {
+                firstStage.close();
+                Stage menuStage = new Stage();
+                MainMenu main = new MainMenu();
+                main.start(menuStage);
+            }
         });
-        wGem = 0;
-        fGem = 0;
         new AnimationTimer() {
             public void handle (long now) {
                 if (water.contains(fireboy.getX()+25, fireboy.getY() + 83)||fire.contains(watergirl.getX()+25, watergirl.getY()+83)) {
@@ -237,11 +246,11 @@ public class Level1 extends Application {
                     ns.stop();
                     moveL.stop();
                 }
-                if (watergirl.getX() >= stair.getX()-85 && watergirl.getX() <= stair.getX()+10 && watergirl.getY()>stair.getY()-70) {
+                if (watergirl.getX() >= stair.getX()-85 && watergirl.getX() <= stair.getX()+10 && watergirl.getY()>stair.getY()-60) {
                     moveR1.stop();
                     watergirl.setX(stair.getX()-80);
                 }
-                if (watergirl.getX() <= stair.getX()+stair.getWidth() && watergirl.getX() >= stair.getX()+stair.getWidth()-20 && watergirl.getY()>stair.getY()-80) {
+                if (watergirl.getX() <= stair.getX()+stair.getWidth() && watergirl.getX() >= stair.getX()+stair.getWidth()-20 && watergirl.getY()>stair.getY()-60) {
                     moveL2.stop();
                     watergirl.setX(740);
                 }
@@ -276,9 +285,9 @@ public class Level1 extends Application {
                         ns.play();
                     }
                 }
-
             }
         }.start();
+
 
         pane.getChildren().addAll(forest, stair, fireboy, watergirl, new Level1.hedgePane(550,725),new Level1.hedgePane(0,groundY),new Level1.hedgePane(150,groundY),new Level1.hedgePane(300,groundY),
                 new Level1.hedgePane(450,groundY),new Level1.hedgePane(600,groundY), new Level1.hedgePane(750,groundY),
