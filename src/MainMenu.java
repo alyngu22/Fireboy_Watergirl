@@ -22,7 +22,7 @@ public class MainMenu extends Application {
     private int wGem;
     private int fGem;
     private int fGem1;
-    private int fGemCount ;
+    private int fGemCount;
     private int wGemCount ;
     private int i;
     private int a;
@@ -39,30 +39,27 @@ public class MainMenu extends Application {
 
         Image l1 = new Image("Images/waterdrop.png");
         Image l2 = new Image("Images/fire-cartoon.png");
-        for (i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             ImageView lOne = new ImageView(l1);
             if(i%2==0){
                 lOne.setImage(l2);
-                a = 2;
+                lOne.setOnMousePressed(e->{
+                    menuStage.close();
+                    Stage oneStage = new Stage();
+                    levelOne(oneStage);
+                });
             }
             else{
                 lOne.setImage(l1);
-                a= 1;
-            }
-            lOne.setOnMousePressed(e -> {
-                menuStage.close();
-                if(a==1){
+                lOne.setOnMousePressed(e -> {
+                    menuStage.close();
                     Stage twoStage = new Stage();
                     levelTwo(twoStage);
-                }
-                else if(a==2){
-                    Stage oneStage = new Stage();
-                    levelOne(oneStage);
-                }
-            });
+                });
+            }
             lOne.setFitHeight(100);
             lOne.setFitWidth(100);
-            lOne.setX(300 + i * 200);
+            lOne.setX(450 + i * 250);
             lOne.setY(250);
 
             Text levelTxt = new Text("" + (i + 1));
@@ -81,6 +78,10 @@ public class MainMenu extends Application {
     }
 
     public void levelOne(Stage oneStage){
+            wGem = 0;
+            fGem = 0;
+            wGem1 = 0;
+            fGem1 = 0;
             Pane pane = new Pane();
             pane.setStyle("-fx-background-color: rgb(0,0,0)");
 
@@ -227,8 +228,6 @@ public class MainMenu extends Application {
 
                 }
             });
-            wGem = 0;
-            fGem = 0;
             new AnimationTimer() {
                 public void handle (long now) {
                     if (water.contains(fireboy.getX()+25, fireboy.getY() + 83)||fire.contains(watergirl.getX()+25, watergirl.getY()+83)) {
@@ -331,11 +330,11 @@ public class MainMenu extends Application {
                         moveR.stop();
                         fireboy.setX(stair.getX()-80);
                     }
-                    if (fireboy.getX() <= stair.getX()+stair.getWidth() && fireboy.getX() >= stair.getX()+stair.getWidth()-15 && fireboy.getY()>stair.getY()-80) {
+                    if (fireboy.getX() <= stair.getX()+stair.getWidth() && fireboy.getX() >= stair.getX()+stair.getWidth()-20 && fireboy.getY()>stair.getY()-80) {
                         moveL.stop();
-                        fireboy.setX(stair.getX()+stair.getWidth());
+                        fireboy.setX(740);
                     }
-                    if (stair.contains(fireboy.getX()+75, fireboy.getY() + 83)||stair.contains(fireboy.getX()+45, fireboy.getY()+83)) {
+                    if (stair.contains(fireboy.getX()+75, fireboy.getY() + 83)||stair.contains(fireboy.getX()+20, fireboy.getY()+83)) {
                         if (fireboy.getY() <= stair.getY()-10) {
                             fireboy.setY(stair.getY()-80);
                             ns.pause();

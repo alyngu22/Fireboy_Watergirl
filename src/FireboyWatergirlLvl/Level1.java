@@ -261,11 +261,11 @@ public class Level1 extends Application {
                     moveR.stop();
                     fireboy.setX(stair.getX()-80);
                 }
-                if (fireboy.getX() <= stair.getX()+stair.getWidth() && fireboy.getX() >= stair.getX()+stair.getWidth()-15 && fireboy.getY()>stair.getY()-80) {
+                if (fireboy.getX() <= stair.getX()+stair.getWidth() && fireboy.getX() >= stair.getX()+stair.getWidth()-20 && fireboy.getY()>stair.getY()-80) {
                     moveL.stop();
-                    fireboy.setX(stair.getX()+stair.getWidth());
+                    fireboy.setX(740);
                 }
-                if (stair.contains(fireboy.getX()+75, fireboy.getY() + 83)||stair.contains(fireboy.getX()+30, fireboy.getY()+83)) {
+                if (stair.contains(fireboy.getX()+75, fireboy.getY() + 83)||stair.contains(fireboy.getX()+20, fireboy.getY()+83)) {
                     if (fireboy.getY() <= stair.getY()-10) {
                         fireboy.setY(stair.getY()-80);
                         ns.pause();
