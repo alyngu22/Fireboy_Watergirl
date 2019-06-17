@@ -1,5 +1,6 @@
 package FireboyWatergirlLvl;
 
+import Main.MainMenu;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,7 +23,7 @@ public class Level3 extends Application {
     private int wGemCount;
     private int fGemCount;
     @Override
-    public void start (Stage firstStage) {
+    public void start (Stage thirdStage) {
 
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: rgb(0,0,0)");
@@ -304,6 +305,13 @@ public class Level3 extends Application {
             if (e.getText().equals("d")) {
                 wMoveR.play();
             }
+            if (e.getCode()== KeyCode.ESCAPE) {
+                thirdStage.close();
+                MainMenu as = new MainMenu();
+                Stage menuStage = new Stage();
+                as.start(menuStage);
+
+            }
         });
 
         pane.setOnKeyReleased( ev -> {
@@ -338,8 +346,8 @@ public class Level3 extends Application {
 
 
         Scene scene = new Scene(pane, 1500,950);
-        firstStage.setScene(scene);
-        firstStage.show();
+        thirdStage.setScene(scene);
+        thirdStage.show();
         pane.requestFocus();
     }
 
