@@ -168,8 +168,8 @@ public class Level3 extends Application {
             public void handle (long now) {
                 if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) ||
                         fire.contains(watergirl.getX() + 60, watergirl.getY() + 85 )||
-                                water2.contains(fireboy.getX(),fireboy.getY()) ||
-                                        fire2.contains(watergirl.getX(),watergirl.getY())) {
+                                water2.contains(fireboy.getX() + 60,fireboy.getY() + 85) ||
+                                        fire2.contains(watergirl.getX() + 60,watergirl.getY() + 85)) {
 
                     pane.getChildren().clear();
                     Rectangle rectangle = new Rectangle(pane.getWidth(), pane.getHeight());
