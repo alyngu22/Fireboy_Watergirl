@@ -3,18 +3,24 @@ package FireboyWatergirlLvl;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Level3 extends Application {
+    private int wGemCount;
+    private int fGemCount;
     @Override
     public void start (Stage firstStage) {
 
@@ -25,50 +31,63 @@ public class Level3 extends Application {
 
         int ground1a = ground1 - 120;
 
-        Rectangle wGate = new Rectangle(1400,725,90,115);
+        Rectangle wGate = new Rectangle(1400,ground1a - 100,90,115);
         wGate.setFill(Color.DEEPSKYBLUE);
 
-        Rectangle fGate = new Rectangle(1200,725,90,115);
+        Rectangle fGate = new Rectangle(1250,ground1a - 100,90,115);
         fGate.setFill(Color.RED);
 
         ImageView step1 = new ImageView("Images/hedgeImage.jpg");
-        step1.setFitWidth(150);
+        step1.setFitWidth(300);
         step1.setFitHeight(185);
-        step1.setX(200);
+        step1.setX(1200);
         step1.setY(ground1a);
 
 
-        ImageView step2 = new ImageView("Images/hedgeImage.jpg");
-        step2.setFitWidth(150);
-        step2.setFitHeight(185);
-        step2.setX(600);
-        step2.setY(ground1a);
-
-        ImageView step3 = new ImageView("Images/hedgeImage.jpg");
-        step3.setFitWidth(150);
-        step3.setFitHeight(185);
-        step3.setX(1000);
-        step3.setY(ground1a);
-
-/*
-        Arc water = new Arc(300,ground1 + 3,115,50,180,180);
-        water.setType(ArcType.ROUND);
-        water.setFill(Color.DEEPSKYBLUE);
-
-        Arc water2 = new Arc(650,ground1 + 3,115,50,180,180);
+        Arc water2 = new Arc(300,ground1 + 3,115,50,180,180);
         water2.setType(ArcType.ROUND);
         water2.setFill(Color.DEEPSKYBLUE);
 
-        Arc fire = new Arc (900, ground1 + 3, 115, 50, 180, 180);
+
+        Arc fire2 = new Arc (500, ground1 + 3, 50, 50, 180, 180);
+        fire2.setType(ArcType.ROUND);
+        fire2.setFill(Color.RED);
+
+        Arc water = new Arc(700,ground1 + 3,115,50,180,180);
+        water.setType(ArcType.ROUND);
+        water.setFill(Color.DEEPSKYBLUE);
+
+
+        Arc fire = new Arc (900, ground1 + 3, 50, 50, 180, 180);
         fire.setType(ArcType.ROUND);
         fire.setFill(Color.RED);
 
 
-        Arc fire2 = new Arc (1250, ground1 + 3, 60, 50, 180, 180);
-        fire2.setType(ArcType.ROUND);
-        fire2.setFill(Color.RED);
+        ImageView bGem = new ImageView("Images/blue.png");
+        bGem.setFitWidth(30);
+        bGem.setFitHeight(30);
+        bGem.setX(340);
+        bGem.setY(735);
 
-*/
+        ImageView bGem1 = new ImageView("Images/blue.png");
+        bGem1.setFitWidth(30);
+        bGem1.setFitHeight(30);
+        bGem1.setX(30);
+        bGem1.setY(ground1-30);
+
+        ImageView rGem = new ImageView("Images/reddish.png");
+        rGem.setFitHeight(35);
+        rGem.setFitWidth(30);
+        rGem.setX(570);
+        rGem.setY(step1.getY() - 30);
+
+        ImageView rGem1 = new ImageView("Images/reddish.png");
+        rGem1.setFitHeight(35);
+        rGem1.setFitWidth(30);
+        rGem1.setX(810);
+        rGem1.setY(750);
+
+
 
         //FIREBOY
         ImageView fireboy = new ImageView("Images/fireboy.png");
@@ -147,8 +166,10 @@ public class Level3 extends Application {
 //CONTACT W/ ELEMENTS
         new AnimationTimer() {
             public void handle (long now) {
-               /* if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire.contains(watergirl.getX() + 60, watergirl.getY() + 85) ||
-                        water2.contains(fireboy.getX() + 60, fireboy.getY() + 85) || fire2.contains(watergirl.getX() + 60, watergirl.getY() + 85)) {
+                if (water.contains(fireboy.getX() + 60, fireboy.getY() + 85) ||
+                        fire.contains(watergirl.getX() + 60, watergirl.getY() + 85 )||
+                                water2.contains(fireboy.getX(),fireboy.getY()) ||
+                                        fire2.contains(watergirl.getX(),watergirl.getY())) {
 
                     pane.getChildren().clear();
                     Rectangle rectangle = new Rectangle(pane.getWidth(), pane.getHeight());
@@ -160,7 +181,60 @@ public class Level3 extends Application {
                     pane.getChildren().add(text);
 
                 }
-*/
+
+                if (watergirl.contains(bGem1.getX(),bGem1.getY())) {
+                    pane.getChildren().remove(bGem1);
+                    wGemCount = 1;
+                }
+
+                if (wGemCount == 1 && watergirl.contains(bGem.getX(),bGem.getY())) {
+                    pane.getChildren().remove(bGem);
+                    wGemCount = 2;
+
+                }
+
+                if (fireboy.contains(rGem.getX(),rGem.getY())) {
+                    pane.getChildren().remove(rGem);
+                    fGemCount=1;
+                }
+
+                if (fGemCount == 1 && fireboy.contains(rGem1.getX(), rGem1.getY())) {
+                    pane.getChildren().remove(rGem1);
+                    fGemCount = 2;
+                }
+
+                if ((wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2)))) {
+                    wGate.setStroke(Color.WHITE);
+                }
+
+                else {
+                    wGate.setStroke(Color.DEEPSKYBLUE);
+                }
+
+                if (fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2))) {
+                    fGate.setStroke(Color.WHITE);
+                }
+
+                else {
+                    fGate.setStroke(Color.RED);
+                }
+
+
+                if (wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2))&&(fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2)))) {
+                    Rectangle rectangle = new Rectangle(pane.getWidth(), pane.getHeight());
+                    rectangle.setFill(Color.GOLDENROD);
+                    DropShadow ds = new DropShadow();
+                    ds.setOffsetY(3.0f);
+                    ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+                    Text text = new Text(355, 475,"Congratulations! You Win!\nFireboy: "+ fGemCount +" Point\nWatergirl: "+wGemCount+ " Point");
+
+                    text.setFont(Font.font("Verdana", FontWeight.BOLD, 45));
+                    text.setEffect(ds);
+                    text.setFill(Color.WHITE);
+                    pane.getChildren().add(rectangle);
+                    pane.getChildren().add(text);
+               }
+
                 //LEFT RIGHT BOUNDS
                 if (fireboy.getX() < 0) {
                     fireboy.setX(0);
@@ -176,57 +250,32 @@ public class Level3 extends Application {
                     watergirl.setX(0);
                 }
 
-
-                if ((wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2)))) {
-                    wGate.setStroke(Color.WHITE);
-                }
-
-                if (fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2))) {
-                    fGate.setStroke(Color.WHITE);
-                }
-
-                if (wGate.contains(watergirl.getX()+(watergirl.getFitWidth()/2),watergirl.getY() + (watergirl.getFitHeight()/2))&&(fGate.contains(fireboy.getX() + (fireboy.getFitWidth()/2),fireboy.getY() + (fireboy.getFitHeight()/2)))) {
-                    pane.getChildren().clear();
-                    Text winT = new Text(265,pane.getHeight()/2,"GAME OVER. YOU WIN!");
-                    winT.setTextAlignment(TextAlignment.CENTER);
-                    winT.setFill(Color.WHITE);
-                    winT.setStroke(Color.WHITE);
-                    winT.setFont(Font.font("Papyrus",100));
-                    pane.getChildren().add( winT);
-                }
-
-
-                //STEP
-                if (fireboy.getX() > 127) {
+                if (fireboy.getX() > step1.getX() - 83) {
                     if (fireboy.getY() <= 705) {
                         fJump.stop();
                         fireboy.setY(ground1a - fireboy.getFitHeight() + 10);
                     }
-                        else {
-                            fireboy.setX(127);
-                        }
+                    else {
+                        fireboy.setX(step1.getX() - 83);
                     }
-                else if (fireboy.getY() == ground1a - fireboy.getFitHeight() + 10) {
-                        fireboy.setY(750);
+                } else if (fireboy.getY() == ground1a - fireboy.getFitHeight() + 10) {
+                    fireboy.setY(750);
+                }
+
+                if (watergirl.getX() > step1.getX() - 83) {
+                    if (watergirl.getY() <= 705) {
+                        wJump.stop();
+                        watergirl.setY(ground1a - watergirl.getFitHeight() + 10);
                     }
-
-
-
-                    if (watergirl.getX() > 1277) {
-                        if (watergirl.getY() <= 705) {
-                            wJump.stop();
-                            watergirl.setY(ground1a - watergirl.getFitHeight() + 10);
-                        }
-                        else {
-                            watergirl.setX(1277);
-                        }
-                    } else if (watergirl.getY() == ground1a - watergirl.getFitHeight() + 10) {
-                        watergirl.setY(750);
+                    else {
+                        watergirl.setX(step1.getX() - 83);
                     }
+                } else if (watergirl.getY() == ground1a - watergirl.getFitHeight() + 10) {
+                    watergirl.setY(750);
+                }
 
+                }
 
-
-            }
         }.start();
 
         //KEYBOARD ACTIONS
@@ -273,17 +322,17 @@ public class Level3 extends Application {
         });
 
         pane.getChildren().addAll(
-
-                step1, step2, step3,
-
                 wGate,fGate,
+                step1,
+
 
                 new hedgePane(0,ground1),new hedgePane(150,ground1),new hedgePane(300,ground1),
                 new hedgePane(450,ground1),new hedgePane(600,ground1), new hedgePane(750,ground1),
                 new hedgePane(900,ground1),new hedgePane(1050,ground1), new hedgePane(1200,ground1), new hedgePane(1350,ground1),
 
-               // water, fire, water2,fire2,
+                bGem, rGem, bGem1, rGem1,
 
+                water2, fire2, water, fire,
                 fireboy,watergirl
         );
 
