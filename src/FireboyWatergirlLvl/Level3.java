@@ -28,6 +28,11 @@ public class Level3 extends Application {
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: rgb(0,0,0)");
 
+
+        ImageView background = new ImageView("Images/darkTree.jpg");
+        background.setFitHeight(pane.getHeight());
+        background.setFitWidth(pane.getWidth());
+
         int ground1 = 825;
 
         int ground1a = ground1 - 120;
@@ -330,6 +335,7 @@ public class Level3 extends Application {
         });
 
         pane.getChildren().addAll(
+                background,
                 wGate,fGate,
                 step1,
 
